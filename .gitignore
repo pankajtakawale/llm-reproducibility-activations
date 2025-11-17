@@ -1,0 +1,37 @@
+# Virtual environment
+venv/
+env/
+ENV/
+
+# Ignore data files
+data/
+
+# Ignore checkpoints
+checkpoints/
+
+# Ignore results
+results/*.json
+results/*.png
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+*.egg-info/
+dist/
+build/
+
+# Jupyter
+.ipynb_checkpoints/
+*.ipynb_checkpoints
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# macOS
+.DS_Store
