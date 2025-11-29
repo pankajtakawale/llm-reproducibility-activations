@@ -61,6 +61,40 @@ def estimate_loss(model, train_data, val_data, config):
 
 
 @torch.no_grad()
+def calculate_accuracy(model, data, config, num_samples=1000):
+    """
+    Calculate top-1 accuracy on a subset of data.
+    
+    Args:
+        model: Trained model
+        data: Encoded text
+        config: Configuration
+        num_samples: Number of sequences to evaluate
+    
+    Returns:
+        Accuracy as a percentage (0-100)
+    """
+    model.eval()
+    correct = 0
+    total = 0
+    
+    for _ in range(num_samples):
+        x, y = get_batch(data, 1, config.block_size, config.device)
+        logits, _ = model(x)
+        
+        # Get predictions for the last token
+        pred = logits[0, -1, :].argmax()
+        target = y[0, -1]
+        
+        if pred == target:
+            correct += 1
+        total += 1
+    
+    accuracy = (correct / total) * 100
+    return accuracy
+
+
+@torch.no_grad()
 def get_predictions(model, data, config, num_samples=1000):
     """
     Get model predictions on a subset of data.
@@ -185,14 +219,22 @@ def train_model(model, train_data, val_data, config, trial_id):
     # Final evaluation
     final_losses = estimate_loss(model, train_data, val_data, config)
     
+    # Calculate accuracy
+    train_accuracy = calculate_accuracy(model, train_data, config)
+    val_accuracy = calculate_accuracy(model, val_data, config)
+    
     print(f"\nTraining completed in {total_time:.2f}s")
     print(f"Final train loss: {final_losses['train']:.4f}")
     print(f"Final val loss: {final_losses['val']:.4f}")
+    print(f"Train accuracy: {train_accuracy:.2f}%")
+    print(f"Val accuracy: {val_accuracy:.2f}%")
     
     results = {
         'trial_id': trial_id,
         'train_loss': float(final_losses['train']),
         'val_loss': float(final_losses['val']),
+        'train_accuracy': float(train_accuracy),
+        'val_accuracy': float(val_accuracy),
         'training_time': total_time,
         'train_loss_history': [float(x) for x in train_losses],
         'val_loss_history': [float(x) for x in val_losses]
@@ -201,16 +243,25 @@ def train_model(model, train_data, val_data, config, trial_id):
     return results
 
 
-def run_experiment(config, activation_name):
+def run_experiment(config, activation_name, model_factory=None, data_loader=None, tokenizer_factory=None):
     """
-    Run full experiment for one activation function.
+    Run full experiment for one activation function with pluggable components.
     
     Args:
         config: Configuration object
         activation_name: Name of activation function
+        model_factory: Optional callable that creates a model. 
+                      Signature: model_factory(config, activation) -> model
+                      If None, defaults to CharLM
+        data_loader: Optional callable that loads and prepares data.
+                    Signature: data_loader(config) -> (train_data, val_data, tokenizer)
+                    If None, defaults to Shakespeare dataset
+        tokenizer_factory: Optional callable that creates a tokenizer.
+                          Signature: tokenizer_factory(text) -> tokenizer
+                          If None, defaults to CharTokenizer
     
     Returns:
-        Dictionary with all results including reproducibility metrics
+        Tuple of (experiment_results dict, models list, tokenizer)
     """
     from prepare_data import load_shakespeare, prepare_data
     from tokenizer import CharTokenizer
@@ -221,20 +272,42 @@ def run_experiment(config, activation_name):
     print(f"# EXPERIMENT: {activation_name.upper()}")
     print(f"{'#'*60}")
     
-    # Load and prepare data
-    text = load_shakespeare()
-    train_text, val_text = prepare_data(text, config.train_split)
-    
-    # Create tokenizer
-    tokenizer = CharTokenizer(text)
-    config.vocab_size = len(tokenizer)
-    
-    # Encode data
-    train_data = tokenizer.encode(train_text)
-    val_data = tokenizer.encode(val_text)
+    # Use default data loader if not provided
+    if data_loader is None:
+        # Default: Shakespeare dataset
+        text = load_shakespeare()
+        train_text, val_text = prepare_data(text, config.train_split)
+        
+        # Use default tokenizer if not provided
+        if tokenizer_factory is None:
+            tokenizer = CharTokenizer(text)
+        else:
+            tokenizer = tokenizer_factory(text)
+        
+        config.vocab_size = len(tokenizer)
+        train_data = tokenizer.encode(train_text)
+        val_data = tokenizer.encode(val_text)
+    else:
+        # Custom data loader
+        train_data, val_data, tokenizer = data_loader(config)
+        config.vocab_size = len(tokenizer)
     
     # Get activation function
     activation = get_activation(activation_name)
+    
+    # Use default model factory if not provided
+    if model_factory is None:
+        def default_model_factory(cfg, act):
+            return CharLM(
+                vocab_size=cfg.vocab_size,
+                n_embd=cfg.n_embd,
+                n_head=cfg.n_head,
+                n_layer=cfg.n_layer,
+                block_size=cfg.block_size,
+                activation=act,
+                dropout=cfg.dropout
+            )
+        model_factory = default_model_factory
     
     # Train multiple models
     models = []
@@ -245,16 +318,8 @@ def run_experiment(config, activation_name):
         seed = config.seed_base + trial
         set_seed(seed)
         
-        # Create model
-        model = CharLM(
-            vocab_size=config.vocab_size,
-            n_embd=config.n_embd,
-            n_head=config.n_head,
-            n_layer=config.n_layer,
-            block_size=config.block_size,
-            activation=activation,
-            dropout=config.dropout
-        ).to(config.device)
+        # Create model using factory
+        model = model_factory(config, activation).to(config.device)
         
         # Train
         result = train_model(model, train_data, val_data, config, trial + 1)
@@ -309,6 +374,9 @@ def run_experiment(config, activation_name):
         'avg_train_loss': np.mean([r['train_loss'] for r in results]),
         'avg_val_loss': np.mean([r['val_loss'] for r in results]),
         'std_val_loss': np.std([r['val_loss'] for r in results]),
+        'avg_train_accuracy': np.mean([r['train_accuracy'] for r in results]),
+        'avg_val_accuracy': np.mean([r['val_accuracy'] for r in results]),
+        'std_val_accuracy': np.std([r['val_accuracy'] for r in results]),
         'avg_relative_pd': np.mean([m['relative_pd'] for m in reproducibility_metrics]),
         'avg_training_time': np.mean([r['training_time'] for r in results])
     }
@@ -325,6 +393,7 @@ def run_experiment(config, activation_name):
     print(f"Experiment Summary: {activation_name}")
     print(f"{'='*60}")
     print(f"Average val loss: {experiment_results['avg_val_loss']:.4f} ± {experiment_results['std_val_loss']:.4f}")
+    print(f"Average val accuracy: {experiment_results['avg_val_accuracy']:.2f}% ± {experiment_results['std_val_accuracy']:.2f}%")
     print(f"Average relative PD: {experiment_results['avg_relative_pd']:.6f}")
     print(f"Average training time: {experiment_results['avg_training_time']:.1f}s")
     print(f"Results saved to {results_path}")
