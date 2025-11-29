@@ -48,6 +48,9 @@ class Config:
     
     # Results
     save_checkpoints = True
+    results_dir = 'results'
+    checkpoint_dir = 'checkpoints'
+    plots_dir = 'plots'
     checkpoint_dir = 'checkpoints'
     results_dir = 'results'
     
