@@ -44,6 +44,125 @@ When you're done:
 deactivate
 ```
 
+## How to Run
+
+### Single Model
+```
+# CharLM only (fastest: ~7s per activation = 35s total)
+python run_all_experiments.py --models charlm
+
+# TinyLSTM only (~15s per activation = 75s total)
+python run_all_experiments.py --models tinylstm
+
+# MiniGPT only (~25s per activation = 125s total)
+python run_all_experiments.py --models minigpt
+```
+
+### Multiple Models
+
+```
+# 2 models (fastest pair: ~2 minutes)
+python run_all_experiments.py --models charlm tinylstm
+
+# 3 models (recommended for comparison: ~5 minutes)
+python run_all_experiments.py --models charlm tinylstm hybridlm
+
+# All 6 models (~9 minutes)
+python run_all_experiments.py --models charlm tinylstm minigpt convlm hybridlm nanotransformer
+```
+
+### Custom Activations
+```
+# Only ReLU and GELU (fastest)
+python run_all_experiments.py --models charlm --activations relu gelu
+
+# Only SmeLU variants
+python run_all_experiments.py --models charlm tinylstm --activations smelu_05 smelu_1
+```
+
+### Background Run
+
+```
+# Run in background
+nohup python run_all_experiments.py --models all > experiments.log 2>&1 &
+
+# Get process ID
+echo $!
+
+# Monitor progress (in another terminal)
+tail -f experiments.log
+
+# Or check periodically
+tail -100 experiments.log
+
+# Kill if needed
+kill <PID>
+```
+
+## Process Results
+```
+# Process all results
+python process_results.py
+```
+
+Outputs:
+
+```
+summary.txt - Text table with all results
+plots/{model}_accuracy.png - Per-model accuracy bars
+plots/{model}_reproducibility.png - Per-model Relative PD bars
+plots/{model}_training_curves.png - Training/validation loss over time
+multi_model_accuracy.png - Cross-model comparison
+multi_model_reproducibility.png - Cross-model reproducibility
+accuracy_vs_reproducibility.png - Trade-off scatter plot
+```
+
+Filter Results:
+
+```
+# Only specific models
+python process_results.py --models charlm tinylstm
+
+# Only specific activations
+python process_results.py --activations relu gelu
+
+# Both filters
+python process_results.py --models charlm --activations smelu_05 smelu_1
+
+# Summary only (no plots)
+python process_results.py --no-plots
+```
+
+### Incremental Workflow
+```
+# Day 1: Test two models
+python run_all_experiments.py --models charlm tinylstm
+python process_results.py
+
+# Day 2: Add another model (results accumulate!)
+python run_all_experiments.py --models hybridlm
+
+# Day 3: Process all accumulated results
+python process_results.py
+
+# Day 4: Complete the rest
+python run_all_experiments.py --models convlm minigpt nanotransformer
+python process_results.py  # Final comprehensive analysis
+```
+
+Workflow:
+
+```
+Quick test: python test_workflow.py (verify setup)
+Run experiments: python [run_all_experiments.py](http://_vscodecontentref_/15) --models charlm tinylstm
+Analyze results: python process_results.py
+Check outputs:
+summary.txt - Table of all results
+plots - Visual comparisons
+Iterate: Add more models or activations as needed
+
+```
+
 ## Model Architecture
 
 - **Type**: Character-level GPT-style transformer
