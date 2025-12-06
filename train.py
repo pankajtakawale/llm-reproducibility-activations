@@ -10,6 +10,7 @@ import time
 import os
 import json
 from pathlib import Path
+from datetime import datetime
 
 
 def set_seed(seed):
@@ -243,13 +244,14 @@ def train_model(model, train_data, val_data, config, trial_id):
     return results
 
 
-def run_experiment(config, activation_name, model_factory=None, data_loader=None, tokenizer_factory=None):
+def run_experiment(config, activation_name, model_name='charlm', model_factory=None, data_loader=None, tokenizer_factory=None):
     """
     Run full experiment for one activation function with pluggable components.
     
     Args:
         config: Configuration object
         activation_name: Name of activation function
+        model_name: Name of the model architecture (for file naming)
         model_factory: Optional callable that creates a model. 
                       Signature: model_factory(config, activation) -> model
                       If None, defaults to CharLM
@@ -368,6 +370,7 @@ def run_experiment(config, activation_name, model_factory=None, data_loader=None
     
     # Aggregate results
     experiment_results = {
+        'model_name': model_name,
         'activation': activation_name,
         'trials': results,
         'reproducibility_metrics': reproducibility_metrics,
@@ -378,19 +381,24 @@ def run_experiment(config, activation_name, model_factory=None, data_loader=None
         'avg_val_accuracy': np.mean([r['val_accuracy'] for r in results]),
         'std_val_accuracy': np.std([r['val_accuracy'] for r in results]),
         'avg_relative_pd': np.mean([m['relative_pd'] for m in reproducibility_metrics]),
-        'avg_training_time': np.mean([r['training_time'] for r in results])
+        'avg_training_time': np.mean([r['training_time'] for r in results]),
+        'timestamp': datetime.now().isoformat()
     }
     
-    # Save results
+    # Save results with new naming format: {model}-{activation}-{timestamp}.json
     results_dir = Path(config.results_dir)
     results_dir.mkdir(parents=True, exist_ok=True)
-    results_path = results_dir / f"{activation_name}_results.json"
+    
+    # Generate timestamp for filename
+    timestamp_str = datetime.now().strftime('%Y%m%d_%H%M%S')
+    results_filename = f"{model_name}-{activation_name}-{timestamp_str}.json"
+    results_path = results_dir / results_filename
     
     with open(results_path, 'w') as f:
         json.dump(experiment_results, f, indent=2)
     
     print(f"\n{'='*60}")
-    print(f"Experiment Summary: {activation_name}")
+    print(f"Experiment Summary: {model_name} with {activation_name}")
     print(f"{'='*60}")
     print(f"Average val loss: {experiment_results['avg_val_loss']:.4f} ± {experiment_results['std_val_loss']:.4f}")
     print(f"Average val accuracy: {experiment_results['avg_val_accuracy']:.2f}% ± {experiment_results['std_val_accuracy']:.2f}%")

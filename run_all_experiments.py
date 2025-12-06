@@ -100,23 +100,24 @@ def run_all_experiments(models=None, activations=None, config=None):
                 model_results[activation] = results
                 
                 # Generate plots (skip if insufficient data)
-                suffix = f'{model_name}_{config.device}'
+                # Filename format: {model}_{activation}_{device}
+                plot_prefix = f'{model_name}_{activation}_{config.device}'
                 try:
-                    plot_training_curves(results, f'{activation}_{suffix}', config.plots_dir)
+                    plot_training_curves(results, plot_prefix, config.plots_dir)
                 except Exception as e:
                     print(f'  Warning: Could not generate training curves: {e}')
                 
                 try:
                     # Only plot reproducibility if we have metrics (requires 2+ trials)
                     if results.get('reproducibility_metrics') and len(results['reproducibility_metrics']) > 0:
-                        plot_reproducibility_metrics(results, f'{activation}_{suffix}', config.plots_dir)
+                        plot_reproducibility_metrics(results, plot_prefix, config.plots_dir)
                     else:
                         print(f'  Note: Skipping reproducibility plot (need 2+ trials)')
                 except Exception as e:
                     print(f'  Warning: Could not generate reproducibility plot: {e}')
                 
                 try:
-                    plot_summary_metrics(results, f'{activation}_{suffix}', config.plots_dir)
+                    plot_summary_metrics(results, plot_prefix, config.plots_dir)
                 except Exception as e:
                     print(f'  Warning: Could not generate summary plot: {e}')
                 
