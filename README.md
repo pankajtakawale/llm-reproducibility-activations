@@ -109,3 +109,12 @@ results = train_model(config)
 
 - Single trial: 5-10 minutes
 - All activations (4) × 3 trials: ~2-3 hours total
+
+## Models
+MODEL_REGISTRY = {
+    'charlm': charlm_factory,
+    'tinylstm': tinylstm_factory,
+    'minigpt': minigpt_factory,
+    'convlm': convlm_factory,
+    'hybridlm': hybridlm_factory,
+    'nanotransformer': nanotransformer_factory,
