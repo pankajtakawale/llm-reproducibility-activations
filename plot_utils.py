@@ -49,7 +49,7 @@ def plot_training_curves(results, activation_name, save_dir='plots'):
     save_path = save_dir / f'{activation_name}_training_curves.png'
     plt.savefig(save_path, dpi=150, bbox_inches='tight')
     print(f"📊 Saved training curves to {save_path}")
-    plt.show()
+    plt.close()
 
 
 def plot_reproducibility_metrics(results, activation_name, save_dir='plots'):
@@ -96,8 +96,8 @@ def plot_reproducibility_metrics(results, activation_name, save_dir='plots'):
     plt.tight_layout()
     save_path = save_dir / f'{activation_name}_reproducibility.png'
     plt.savefig(save_path, dpi=150, bbox_inches='tight')
-    print(f"📊 Saved reproducibility plots to {save_path}")
-    plt.show()
+    print(f"📊 Saved reproducibility metrics to {save_path}")
+    plt.close()
 
 
 def plot_summary_metrics(results, activation_name, save_dir='plots'):
@@ -144,8 +144,8 @@ def plot_summary_metrics(results, activation_name, save_dir='plots'):
     plt.tight_layout()
     save_path = save_dir / f'{activation_name}_summary.png'
     plt.savefig(save_path, dpi=150, bbox_inches='tight')
-    print(f"📊 Saved summary plots to {save_path}")
-    plt.show()
+    print(f"📊 Saved summary metrics to {save_path}")
+    plt.close()
 
 
 def plot_all_activation_results(save_dir='plots'):
@@ -270,7 +270,7 @@ def plot_all_activation_results(save_dir='plots'):
     save_path = save_dir / 'comprehensive_comparison.png'
     plt.savefig(save_path, dpi=150, bbox_inches='tight')
     print(f"✅ Saved comprehensive comparison to {save_path}")
-    plt.show()
+    plt.close()
 
 
 def save_results_summary(save_path='results/summary.csv'):

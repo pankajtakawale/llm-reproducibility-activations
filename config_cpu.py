@@ -18,7 +18,7 @@ class ConfigCPU:
     }
     
     # Number of training trials per activation function
-    trials_per_activation = 2  # Reduced from 3 for faster testing
+    trials_per_activation = 3  # Reduced from 3 for faster testing
     
     # Model architecture (REDUCED for CPU)
     vocab_size = None  # Will be set after loading data
@@ -30,7 +30,7 @@ class ConfigCPU:
     
     # Training hyperparameters (REDUCED for CPU)
     batch_size = 32    # Reduced from 64
-    max_iters = 100    # Reduced from 5000 for quick test
+    max_iters = 200    # Reduced from 5000 for quick test
     learning_rate = 3e-4
     eval_interval = 50 # Reduced from 500
     eval_iters = 50    # Reduced from 200
