@@ -163,6 +163,11 @@ Iterate: Add more models or activations as needed
 
 ```
 
+### Run All Models
+```
+python run_all_experiments.py --models all
+```
+
 ## Model Architecture
 
 - **Type**: Character-level GPT-style transformer
