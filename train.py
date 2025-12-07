@@ -189,12 +189,26 @@ def train_model(model, train_data, val_data, config, trial_id):
     print(f"Training Trial {trial_id}")
     print(f"{'='*60}")
     
+    # Setup logging
+    log_file = Path('training.log')
+    
+    def log_message(msg):
+        """Log to both console and file"""
+        print(msg, flush=True)
+        with open(log_file, 'a') as f:
+            f.write(f"{datetime.now().strftime('%Y-%m-%d %H:%M:%S')} - {msg}\n")
+    
+    log_message(f"Starting Trial {trial_id} - {config.max_iters} iterations")
+    
     optimizer = torch.optim.AdamW(model.parameters(), lr=config.learning_rate)
     
     # Training loop
     start_time = time.time()
     train_losses = []
     val_losses = []
+    
+    # Progress logging interval - more frequent for short runs
+    log_interval = min(50, config.eval_interval)
     
     for iter in range(config.max_iters):
         # Evaluate periodically
@@ -204,8 +218,14 @@ def train_model(model, train_data, val_data, config, trial_id):
             val_losses.append(losses['val'])
             
             elapsed = time.time() - start_time
-            print(f"Step {iter:5d} | Train loss: {losses['train']:.4f} | "
-                  f"Val loss: {losses['val']:.4f} | Time: {elapsed:.1f}s")
+            msg = f"Step {iter:5d} | Train loss: {losses['train']:.4f} | Val loss: {losses['val']:.4f} | Time: {elapsed:.1f}s"
+            log_message(msg)
+        elif iter % log_interval == 0:
+            # Progress update without full evaluation
+            elapsed = time.time() - start_time
+            progress = (iter / config.max_iters) * 100
+            msg = f"Step {iter:5d} | Progress: {progress:.1f}% | Time: {elapsed:.1f}s"
+            log_message(msg)
         
         # Training step
         x, y = get_batch(train_data, config.batch_size, config.block_size, config.device)
@@ -224,11 +244,11 @@ def train_model(model, train_data, val_data, config, trial_id):
     train_accuracy = calculate_accuracy(model, train_data, config)
     val_accuracy = calculate_accuracy(model, val_data, config)
     
-    print(f"\nTraining completed in {total_time:.2f}s")
-    print(f"Final train loss: {final_losses['train']:.4f}")
-    print(f"Final val loss: {final_losses['val']:.4f}")
-    print(f"Train accuracy: {train_accuracy:.2f}%")
-    print(f"Val accuracy: {val_accuracy:.2f}%")
+    log_message(f"\nTraining completed in {total_time:.2f}s")
+    log_message(f"Final train loss: {final_losses['train']:.4f}")
+    log_message(f"Final val loss: {final_losses['val']:.4f}")
+    log_message(f"Train accuracy: {train_accuracy:.2f}%")
+    log_message(f"Val accuracy: {val_accuracy:.2f}%")
     
     results = {
         'trial_id': trial_id,

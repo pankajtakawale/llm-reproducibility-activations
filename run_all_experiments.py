@@ -46,7 +46,7 @@ def run_all_experiments(models=None, activations=None, config=None):
             config.device = 'cuda'
             device_name = torch.cuda.get_device_name(0)
             print(f'🚀 GPU detected: {device_name}')
-            print(f'   Using full model config (6 layers, 384 hidden, 5000 iters)')
+            print(f'   Using full model config ({config.n_layer} layers, {config.n_embd} hidden, {config.max_iters} iters)')
         else:
             config = ConfigCPU()
             config.device = 'cpu'
