@@ -19,21 +19,21 @@ class Config:
     }
     
     # Number of training trials per activation function
-    trials_per_activation = 3
+    trials_per_activation = 3  # 3 trials for reproducibility metrics
     
-    # Model architecture
+    # Model architecture - Partial model optimized for 3-hour full experiment run
     vocab_size = None  # Will be set after loading data
-    n_embd = 384       # Embedding dimension
-    n_head = 6         # Number of attention heads
-    n_layer = 6        # Number of transformer layers
+    n_embd = 256       # Embedding dimension (reduced from 384)
+    n_head = 4         # Number of attention heads (reduced from 6)
+    n_layer = 2        # Number of transformer layers (reduced from 6)
     block_size = 256   # Context length (characters)
     dropout = 0.2      # Dropout rate
     
     # Training hyperparameters
     batch_size = 64
-    max_iters = 5000   # Number of training iterations (~5-10 min)
+    max_iters = 500   # Number of training iterations (6 models × 5 activations in ~3 hours)
     learning_rate = 3e-4
-    eval_interval = 500
+    eval_interval = 100  # Evaluate every 100 steps
     eval_iters = 200
     
     # Reproducibility settings

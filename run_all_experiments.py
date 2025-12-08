@@ -12,6 +12,8 @@ import torch
 import numpy as np
 from config import Config
 from config_cpu import ConfigCPU
+from config_gpu_lite import ConfigGPULite
+from config_full_gpu import ConfigFullGPU
 from train import run_experiment
 from model_factories import get_model_factory, list_available_models
 from plot_utils import plot_training_curves, plot_reproducibility_metrics, plot_summary_metrics
@@ -198,6 +200,8 @@ def main():
     parser.add_argument('--activations', nargs='+',
                        default=['smelu_05', 'smelu_1', 'relu', 'gelu', 'swish'],
                        help='Activation functions to test')
+    parser.add_argument('--config', choices=['gpu', 'gpu_lite', 'gpu_full', 'cpu', 'auto'], default='auto',
+                       help='Configuration to use: gpu (partial), gpu_lite (lightweight), gpu_full (publication-quality), cpu, or auto-detect (default: auto)')
     parser.add_argument('--list-models', action='store_true',
                        help='List available models and exit')
     
@@ -214,8 +218,28 @@ def main():
         args.models = list_available_models()
         print(f'Running all {len(args.models)} models: {", ".join(args.models)}')
     
+    # Select configuration
+    config = None
+    if args.config != 'auto':
+        if args.config == 'gpu':
+            config = Config()
+            config.device = 'cuda'
+            print(f'🚀 Using partial GPU config ({config.n_layer} layers, {config.n_embd} hidden, {config.max_iters} iters)')
+        elif args.config == 'gpu_lite':
+            config = ConfigGPULite()
+            config.device = 'cuda'
+            print(f'⚡ Using lightweight GPU config ({config.n_layer} layers, {config.n_embd} hidden, {config.max_iters} iters)')
+        elif args.config == 'gpu_full':
+            config = ConfigFullGPU()
+            config.device = 'cuda'
+            print(f'🔥 Using FULL GPU config ({config.n_layer} layers, {config.n_embd} hidden, {config.max_iters} iters) - Publication Quality')
+        elif args.config == 'cpu':
+            config = ConfigCPU()
+            config.device = 'cpu'
+            print(f'💻 Using CPU config ({config.n_layer} layers, {config.n_embd} hidden, {config.max_iters} iters)')
+    
     # Run experiments
-    run_all_experiments(models=args.models, activations=args.activations)
+    run_all_experiments(models=args.models, activations=args.activations, config=config)
 
 
 if __name__ == '__main__':

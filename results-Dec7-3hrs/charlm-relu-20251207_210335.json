@@ -1,0 +1,101 @@
+{
+  "model_name": "charlm",
+  "activation": "relu",
+  "trials": [
+    {
+      "trial_id": 1,
+      "train_loss": 2.4028613567352295,
+      "val_loss": 2.423983097076416,
+      "train_accuracy": 25.8,
+      "val_accuracy": 26.400000000000002,
+      "training_time": 321.54076051712036,
+      "train_loss_history": [
+        4.344427108764648,
+        2.6288950443267822,
+        2.4937798976898193,
+        2.447967290878296,
+        2.404177665710449
+      ],
+      "val_loss_history": [
+        4.343263149261475,
+        2.627484083175659,
+        2.496079683303833,
+        2.4609298706054688,
+        2.4263031482696533
+      ]
+    },
+    {
+      "trial_id": 2,
+      "train_loss": 2.4021108150482178,
+      "val_loss": 2.4233124256134033,
+      "train_accuracy": 29.5,
+      "val_accuracy": 26.8,
+      "training_time": 181.24815440177917,
+      "train_loss_history": [
+        4.133676052093506,
+        2.614635705947876,
+        2.496457099914551,
+        2.442014455795288,
+        2.4071195125579834
+      ],
+      "val_loss_history": [
+        4.136958122253418,
+        2.6121468544006348,
+        2.501802921295166,
+        2.4593045711517334,
+        2.432033061981201
+      ]
+    },
+    {
+      "trial_id": 3,
+      "train_loss": 2.410615921020508,
+      "val_loss": 2.4346671104431152,
+      "train_accuracy": 29.9,
+      "val_accuracy": 31.5,
+      "training_time": 177.93920397758484,
+      "train_loss_history": [
+        4.235796928405762,
+        2.6542739868164062,
+        2.496148109436035,
+        2.444307565689087,
+        2.408435106277466
+      ],
+      "val_loss_history": [
+        4.231199264526367,
+        2.6602883338928223,
+        2.498704433441162,
+        2.4605634212493896,
+        2.4363248348236084
+      ]
+    }
+  ],
+  "reproducibility_metrics": [
+    {
+      "model_pair": "1_vs_2",
+      "relative_pd": 0.6536122560501099,
+      "prediction_differences": 861,
+      "total_predictions": 1000
+    },
+    {
+      "model_pair": "1_vs_3",
+      "relative_pd": 0.6524718403816223,
+      "prediction_differences": 858,
+      "total_predictions": 1000
+    },
+    {
+      "model_pair": "2_vs_3",
+      "relative_pd": 0.6440304517745972,
+      "prediction_differences": 856,
+      "total_predictions": 1000
+    }
+  ],
+  "avg_train_loss": 2.405196030934652,
+  "avg_val_loss": 2.427320877710978,
+  "std_val_loss": 0.005201781846564129,
+  "avg_train_accuracy": 28.399999999999995,
+  "avg_val_accuracy": 28.233333333333334,
+  "std_val_accuracy": 2.3156472577277865,
+  "avg_relative_pd": 0.6500381827354431,
+  "avg_training_time": 226.90937296549478,
+  "timestamp": "2025-12-07T21:03:35.115066"
+}
