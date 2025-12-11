@@ -1,0 +1,593 @@
+/usr/local/lib/python3.12/dist-packages/torch/cuda/__init__.py:235: UserWarning: 
+NVIDIA GB10 with CUDA capability sm_121 is not compatible with the current PyTorch installation.
+The current PyTorch install supports CUDA capabilities sm_80 sm_86 sm_90 compute_90.
+If you want to use the NVIDIA GB10 GPU with PyTorch, please check the instructions at https://pytorch.org/get-started/locally/
+
+  warnings.warn(
+🚀 Using full GPU config (2 layers, 256 hidden, 500 iters)
+============================================================
+RUNNING MULTI-MODEL EXPERIMENTS
+============================================================
+Device: cuda
+Models: nanotransformer (1 total)
+Activations: smelu_05, smelu_1, relu, gelu, swish (5 total)
+Iterations: 500, Trials: 3
+Total experiments: 1 models × 5 activations = 5
+============================================================
+
+############################################################
+# MODEL 1/1: NANOTRANSFORMER
+############################################################
+
+[1/5] nanotransformer with smelu_05...
+
+############################################################
+# EXPERIMENT: SMELU_05
+############################################################
+[INFO] Loaded 1,115,394 characters from data/shakespeare.txt
+[INFO] Train size: 1,003,854 characters
+[INFO] Val size: 111,540 characters
+[INFO] Vocabulary size: 65
+[INFO] Characters: 
+ !$&',-.3:;?ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz
+
+============================================================
+Training Trial 1
+============================================================
+Starting Trial 1 - 500 iterations
+Step     0 | Train loss: 4.3092 | Val loss: 4.3018 | Time: 63.9s
+Step    50 | Progress: 10.0% | Time: 126.9s
+Step   100 | Train loss: 2.4643 | Val loss: 2.4818 | Time: 138.7s
+Step   150 | Progress: 30.0% | Time: 141.0s
+Step   200 | Train loss: 2.3481 | Val loss: 2.3841 | Time: 152.9s
+Step   250 | Progress: 50.0% | Time: 155.2s
+Step   300 | Train loss: 2.2091 | Val loss: 2.2704 | Time: 167.1s
+Step   350 | Progress: 70.0% | Time: 169.4s
+Step   400 | Train loss: 2.0050 | Val loss: 2.1106 | Time: 181.0s
+Step   450 | Progress: 90.0% | Time: 183.3s
+Step   499 | Train loss: 1.8291 | Val loss: 1.9704 | Time: 194.0s
+
+Training completed in 194.02s
+Final train loss: 1.8312
+Final val loss: 1.9767
+Train accuracy: 39.70%
+Val accuracy: 35.80%
+Saved checkpoint to checkpoints/smelu_05/trial_1.pt
+
+============================================================
+Training Trial 2
+============================================================
+Starting Trial 2 - 500 iterations
+Step     0 | Train loss: 4.1701 | Val loss: 4.1788 | Time: 8.2s
+Step    50 | Progress: 10.0% | Time: 10.5s
+Step   100 | Train loss: 2.4568 | Val loss: 2.4758 | Time: 21.1s
+Step   150 | Progress: 30.0% | Time: 23.4s
+Step   200 | Train loss: 2.3311 | Val loss: 2.3619 | Time: 34.2s
+Step   250 | Progress: 50.0% | Time: 36.5s
+Step   300 | Train loss: 2.2091 | Val loss: 2.2655 | Time: 47.3s
+Step   350 | Progress: 70.0% | Time: 49.7s
+Step   400 | Train loss: 2.0025 | Val loss: 2.0969 | Time: 60.5s
+Step   450 | Progress: 90.0% | Time: 62.9s
+Step   499 | Train loss: 1.8372 | Val loss: 1.9659 | Time: 73.6s
+
+Training completed in 73.62s
+Final train loss: 1.8421
+Final val loss: 1.9709
+Train accuracy: 41.30%
+Val accuracy: 37.20%
+Saved checkpoint to checkpoints/smelu_05/trial_2.pt
+
+============================================================
+Training Trial 3
+============================================================
+Starting Trial 3 - 500 iterations
+Step     0 | Train loss: 4.2510 | Val loss: 4.2480 | Time: 8.6s
+Step    50 | Progress: 10.0% | Time: 10.9s
+Step   100 | Train loss: 2.4591 | Val loss: 2.4703 | Time: 21.9s
+Step   150 | Progress: 30.0% | Time: 24.2s
+Step   200 | Train loss: 2.3432 | Val loss: 2.3758 | Time: 35.3s
+Step   250 | Progress: 50.0% | Time: 37.6s
+Step   300 | Train loss: 2.2013 | Val loss: 2.2643 | Time: 48.4s
+Step   350 | Progress: 70.0% | Time: 50.7s
+Step   400 | Train loss: 2.0047 | Val loss: 2.0992 | Time: 61.5s
+Step   450 | Progress: 90.0% | Time: 63.8s
+Step   499 | Train loss: 1.8370 | Val loss: 1.9679 | Time: 75.9s
+
+Training completed in 75.95s
+Final train loss: 1.8371
+Final val loss: 1.9676
+Train accuracy: 42.50%
+Val accuracy: 39.10%
+Saved checkpoint to checkpoints/smelu_05/trial_3.pt
+
+============================================================
+Calculating Reproducibility Metrics
+============================================================
+Comparing Model 1 vs Model 2...
+  Relative PD: 0.781969
+  Prediction differences: 932/1000
+Comparing Model 1 vs Model 3...
+  Relative PD: 0.772120
+  Prediction differences: 917/1000
+Comparing Model 2 vs Model 3...
+  Relative PD: 0.765738
+  Prediction differences: 895/1000
+
+============================================================
+Experiment Summary: nanotransformer with smelu_05
+============================================================
+Average val loss: 1.9717 ± 0.0038
+Average val accuracy: 37.37% ± 1.35%
+Average relative PD: 0.773276
+Average training time: 114.5s
+Results saved to results/nanotransformer-smelu_05-20251208_030850.json
+📊 Saved training curves to plots/nanotransformer_smelu_05_cuda_training_curves.png
+📊 Saved reproducibility metrics to plots/nanotransformer_smelu_05_cuda_reproducibility.png
+📊 Saved summary metrics to plots/nanotransformer_smelu_05_cuda_summary.png
+✓ nanotransformer/smelu_05 completed in 391.0s
+  Val loss: 1.9717
+  Relative PD: 0.773276
+
+[2/5] nanotransformer with smelu_1...
+
+############################################################
+# EXPERIMENT: SMELU_1
+############################################################
+[INFO] Loaded 1,115,394 characters from data/shakespeare.txt
+[INFO] Train size: 1,003,854 characters
+[INFO] Val size: 111,540 characters
+[INFO] Vocabulary size: 65
+[INFO] Characters: 
+ !$&',-.3:;?ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz
+
+============================================================
+Training Trial 1
+============================================================
+Starting Trial 1 - 500 iterations
+Step     0 | Train loss: 4.3092 | Val loss: 4.3018 | Time: 9.2s
+Step    50 | Progress: 10.0% | Time: 11.5s
+Step   100 | Train loss: 2.4643 | Val loss: 2.4818 | Time: 23.5s
+Step   150 | Progress: 30.0% | Time: 25.8s
+Step   200 | Train loss: 2.3481 | Val loss: 2.3841 | Time: 37.9s
+Step   250 | Progress: 50.0% | Time: 40.3s
+Step   300 | Train loss: 2.2091 | Val loss: 2.2704 | Time: 51.8s
+Step   350 | Progress: 70.0% | Time: 53.9s
+Step   400 | Train loss: 2.0050 | Val loss: 2.1106 | Time: 65.3s
+Step   450 | Progress: 90.0% | Time: 67.4s
+Step   499 | Train loss: 1.8291 | Val loss: 1.9704 | Time: 78.7s
+
+Training completed in 78.74s
+Final train loss: 1.8312
+Final val loss: 1.9767
+Train accuracy: 39.70%
+Val accuracy: 35.80%
+Saved checkpoint to checkpoints/smelu_1/trial_1.pt
+
+============================================================
+Training Trial 2
+============================================================
+Starting Trial 2 - 500 iterations
+Step     0 | Train loss: 4.1701 | Val loss: 4.1788 | Time: 8.1s
+Step    50 | Progress: 10.0% | Time: 10.3s
+Step   100 | Train loss: 2.4568 | Val loss: 2.4758 | Time: 20.6s
+Step   150 | Progress: 30.0% | Time: 22.8s
+Step   200 | Train loss: 2.3311 | Val loss: 2.3619 | Time: 33.2s
+Step   250 | Progress: 50.0% | Time: 35.3s
+Step   300 | Train loss: 2.2091 | Val loss: 2.2655 | Time: 46.1s
+Step   350 | Progress: 70.0% | Time: 48.3s
+Step   400 | Train loss: 2.0025 | Val loss: 2.0969 | Time: 58.4s
+Step   450 | Progress: 90.0% | Time: 60.6s
+Step   499 | Train loss: 1.8372 | Val loss: 1.9659 | Time: 70.6s
+
+Training completed in 70.64s
+Final train loss: 1.8421
+Final val loss: 1.9709
+Train accuracy: 41.30%
+Val accuracy: 37.20%
+Saved checkpoint to checkpoints/smelu_1/trial_2.pt
+
+============================================================
+Training Trial 3
+============================================================
+Starting Trial 3 - 500 iterations
+Step     0 | Train loss: 4.2510 | Val loss: 4.2480 | Time: 7.9s
+Step    50 | Progress: 10.0% | Time: 10.1s
+Step   100 | Train loss: 2.4591 | Val loss: 2.4703 | Time: 20.4s
+Step   150 | Progress: 30.0% | Time: 22.5s
+Step   200 | Train loss: 2.3432 | Val loss: 2.3758 | Time: 34.1s
+Step   250 | Progress: 50.0% | Time: 36.3s
+Step   300 | Train loss: 2.2013 | Val loss: 2.2643 | Time: 47.2s
+Step   350 | Progress: 70.0% | Time: 49.4s
+Step   400 | Train loss: 2.0047 | Val loss: 2.0992 | Time: 59.9s
+Step   450 | Progress: 90.0% | Time: 62.1s
+Step   499 | Train loss: 1.8370 | Val loss: 1.9679 | Time: 72.6s
+
+Training completed in 72.60s
+Final train loss: 1.8371
+Final val loss: 1.9676
+Train accuracy: 42.50%
+Val accuracy: 39.10%
+Saved checkpoint to checkpoints/smelu_1/trial_3.pt
+
+============================================================
+Calculating Reproducibility Metrics
+============================================================
+Comparing Model 1 vs Model 2...
+  Relative PD: 0.781969
+  Prediction differences: 932/1000
+Comparing Model 1 vs Model 3...
+  Relative PD: 0.772120
+  Prediction differences: 917/1000
+Comparing Model 2 vs Model 3...
+  Relative PD: 0.765738
+  Prediction differences: 895/1000
+
+============================================================
+Experiment Summary: nanotransformer with smelu_1
+============================================================
+Average val loss: 1.9717 ± 0.0038
+Average val accuracy: 37.37% ± 1.35%
+Average relative PD: 0.773276
+Average training time: 74.0s
+Results saved to results/nanotransformer-smelu_1-20251208_031304.json
+📊 Saved training curves to plots/nanotransformer_smelu_1_cuda_training_curves.png
+📊 Saved reproducibility metrics to plots/nanotransformer_smelu_1_cuda_reproducibility.png
+📊 Saved summary metrics to plots/nanotransformer_smelu_1_cuda_summary.png
+✓ nanotransformer/smelu_1 completed in 254.3s
+  Val loss: 1.9717
+  Relative PD: 0.773276
+
+[3/5] nanotransformer with relu...
+
+############################################################
+# EXPERIMENT: RELU
+############################################################
+[INFO] Loaded 1,115,394 characters from data/shakespeare.txt
+[INFO] Train size: 1,003,854 characters
+[INFO] Val size: 111,540 characters
+[INFO] Vocabulary size: 65
+[INFO] Characters: 
+ !$&',-.3:;?ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz
+
+============================================================
+Training Trial 1
+============================================================
+Starting Trial 1 - 500 iterations
+Step     0 | Train loss: 4.3092 | Val loss: 4.3018 | Time: 9.5s
+Step    50 | Progress: 10.0% | Time: 11.8s
+Step   100 | Train loss: 2.4643 | Val loss: 2.4818 | Time: 23.4s
+Step   150 | Progress: 30.0% | Time: 25.7s
+Step   200 | Train loss: 2.3481 | Val loss: 2.3841 | Time: 37.9s
+Step   250 | Progress: 50.0% | Time: 40.2s
+Step   300 | Train loss: 2.2091 | Val loss: 2.2704 | Time: 52.2s
+Step   350 | Progress: 70.0% | Time: 54.6s
+Step   400 | Train loss: 2.0050 | Val loss: 2.1106 | Time: 65.2s
+Step   450 | Progress: 90.0% | Time: 67.6s
+Step   499 | Train loss: 1.8291 | Val loss: 1.9704 | Time: 78.4s
+
+Training completed in 78.40s
+Final train loss: 1.8312
+Final val loss: 1.9767
+Train accuracy: 39.70%
+Val accuracy: 35.80%
+Saved checkpoint to checkpoints/relu/trial_1.pt
+
+============================================================
+Training Trial 2
+============================================================
+Starting Trial 2 - 500 iterations
+Step     0 | Train loss: 4.1701 | Val loss: 4.1788 | Time: 8.3s
+Step    50 | Progress: 10.0% | Time: 10.6s
+Step   100 | Train loss: 2.4568 | Val loss: 2.4758 | Time: 21.2s
+Step   150 | Progress: 30.0% | Time: 23.5s
+Step   200 | Train loss: 2.3311 | Val loss: 2.3619 | Time: 34.7s
+Step   250 | Progress: 50.0% | Time: 37.0s
+Step   300 | Train loss: 2.2091 | Val loss: 2.2655 | Time: 48.9s
+Step   350 | Progress: 70.0% | Time: 51.3s
+Step   400 | Train loss: 2.0025 | Val loss: 2.0969 | Time: 63.0s
+Step   450 | Progress: 90.0% | Time: 65.4s
+Step   499 | Train loss: 1.8372 | Val loss: 1.9659 | Time: 76.7s
+
+Training completed in 76.76s
+Final train loss: 1.8421
+Final val loss: 1.9709
+Train accuracy: 41.30%
+Val accuracy: 37.20%
+Saved checkpoint to checkpoints/relu/trial_2.pt
+
+============================================================
+Training Trial 3
+============================================================
+Starting Trial 3 - 500 iterations
+Step     0 | Train loss: 4.2510 | Val loss: 4.2480 | Time: 8.5s
+Step    50 | Progress: 10.0% | Time: 10.8s
+Step   100 | Train loss: 2.4591 | Val loss: 2.4703 | Time: 22.7s
+Step   150 | Progress: 30.0% | Time: 25.1s
+Step   200 | Train loss: 2.3432 | Val loss: 2.3758 | Time: 35.9s
+Step   250 | Progress: 50.0% | Time: 38.2s
+Step   300 | Train loss: 2.2013 | Val loss: 2.2643 | Time: 49.0s
+Step   350 | Progress: 70.0% | Time: 51.3s
+Step   400 | Train loss: 2.0047 | Val loss: 2.0992 | Time: 62.3s
+Step   450 | Progress: 90.0% | Time: 64.6s
+Step   499 | Train loss: 1.8370 | Val loss: 1.9679 | Time: 76.5s
+
+Training completed in 76.52s
+Final train loss: 1.8371
+Final val loss: 1.9676
+Train accuracy: 42.50%
+Val accuracy: 39.10%
+Saved checkpoint to checkpoints/relu/trial_3.pt
+
+============================================================
+Calculating Reproducibility Metrics
+============================================================
+Comparing Model 1 vs Model 2...
+  Relative PD: 0.781969
+  Prediction differences: 932/1000
+Comparing Model 1 vs Model 3...
+  Relative PD: 0.772120
+  Prediction differences: 917/1000
+Comparing Model 2 vs Model 3...
+  Relative PD: 0.765738
+  Prediction differences: 895/1000
+
+============================================================
+Experiment Summary: nanotransformer with relu
+============================================================
+Average val loss: 1.9717 ± 0.0038
+Average val accuracy: 37.37% ± 1.35%
+Average relative PD: 0.773276
+Average training time: 77.2s
+Results saved to results/nanotransformer-relu-20251208_031730.json
+📊 Saved training curves to plots/nanotransformer_relu_cuda_training_curves.png
+📊 Saved reproducibility metrics to plots/nanotransformer_relu_cuda_reproducibility.png
+📊 Saved summary metrics to plots/nanotransformer_relu_cuda_summary.png
+✓ nanotransformer/relu completed in 265.6s
+  Val loss: 1.9717
+  Relative PD: 0.773276
+
+[4/5] nanotransformer with gelu...
+
+############################################################
+# EXPERIMENT: GELU
+############################################################
+[INFO] Loaded 1,115,394 characters from data/shakespeare.txt
+[INFO] Train size: 1,003,854 characters
+[INFO] Val size: 111,540 characters
+[INFO] Vocabulary size: 65
+[INFO] Characters: 
+ !$&',-.3:;?ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz
+
+============================================================
+Training Trial 1
+============================================================
+Starting Trial 1 - 500 iterations
+Step     0 | Train loss: 4.3092 | Val loss: 4.3018 | Time: 9.1s
+Step    50 | Progress: 10.0% | Time: 11.4s
+Step   100 | Train loss: 2.4643 | Val loss: 2.4818 | Time: 23.5s
+Step   150 | Progress: 30.0% | Time: 25.8s
+Step   200 | Train loss: 2.3481 | Val loss: 2.3841 | Time: 37.7s
+Step   250 | Progress: 50.0% | Time: 40.0s
+Step   300 | Train loss: 2.2091 | Val loss: 2.2704 | Time: 51.7s
+Step   350 | Progress: 70.0% | Time: 54.1s
+Step   400 | Train loss: 2.0050 | Val loss: 2.1106 | Time: 65.9s
+Step   450 | Progress: 90.0% | Time: 68.3s
+Step   499 | Train loss: 1.8291 | Val loss: 1.9704 | Time: 79.4s
+
+Training completed in 79.37s
+Final train loss: 1.8312
+Final val loss: 1.9767
+Train accuracy: 39.70%
+Val accuracy: 35.80%
+Saved checkpoint to checkpoints/gelu/trial_1.pt
+
+============================================================
+Training Trial 2
+============================================================
+Starting Trial 2 - 500 iterations
+Step     0 | Train loss: 4.1701 | Val loss: 4.1788 | Time: 8.5s
+Step    50 | Progress: 10.0% | Time: 10.8s
+Step   100 | Train loss: 2.4568 | Val loss: 2.4758 | Time: 22.9s
+Step   150 | Progress: 30.0% | Time: 25.3s
+Step   200 | Train loss: 2.3311 | Val loss: 2.3619 | Time: 37.3s
+Step   250 | Progress: 50.0% | Time: 39.7s
+Step   300 | Train loss: 2.2091 | Val loss: 2.2655 | Time: 51.8s
+Step   350 | Progress: 70.0% | Time: 54.1s
+Step   400 | Train loss: 2.0025 | Val loss: 2.0969 | Time: 66.2s
+Step   450 | Progress: 90.0% | Time: 68.5s
+Step   499 | Train loss: 1.8372 | Val loss: 1.9659 | Time: 80.6s
+
+Training completed in 80.64s
+Final train loss: 1.8421
+Final val loss: 1.9709
+Train accuracy: 41.30%
+Val accuracy: 37.20%
+Saved checkpoint to checkpoints/gelu/trial_2.pt
+
+============================================================
+Training Trial 3
+============================================================
+Starting Trial 3 - 500 iterations
+Step     0 | Train loss: 4.2510 | Val loss: 4.2480 | Time: 8.4s
+Step    50 | Progress: 10.0% | Time: 10.7s
+Step   100 | Train loss: 2.4591 | Val loss: 2.4703 | Time: 21.7s
+Step   150 | Progress: 30.0% | Time: 24.1s
+Step   200 | Train loss: 2.3432 | Val loss: 2.3758 | Time: 35.6s
+Step   250 | Progress: 50.0% | Time: 37.9s
+Step   300 | Train loss: 2.2013 | Val loss: 2.2643 | Time: 48.9s
+Step   350 | Progress: 70.0% | Time: 51.3s
+Step   400 | Train loss: 2.0047 | Val loss: 2.0992 | Time: 62.3s
+Step   450 | Progress: 90.0% | Time: 64.6s
+Step   499 | Train loss: 1.8370 | Val loss: 1.9679 | Time: 75.4s
+
+Training completed in 75.45s
+Final train loss: 1.8371
+Final val loss: 1.9676
+Train accuracy: 42.50%
+Val accuracy: 39.10%
+Saved checkpoint to checkpoints/gelu/trial_3.pt
+
+============================================================
+Calculating Reproducibility Metrics
+============================================================
+Comparing Model 1 vs Model 2...
+  Relative PD: 0.781969
+  Prediction differences: 932/1000
+Comparing Model 1 vs Model 3...
+  Relative PD: 0.772120
+  Prediction differences: 917/1000
+Comparing Model 2 vs Model 3...
+  Relative PD: 0.765738
+  Prediction differences: 895/1000
+
+============================================================
+Experiment Summary: nanotransformer with gelu
+============================================================
+Average val loss: 1.9717 ± 0.0038
+Average val accuracy: 37.37% ± 1.35%
+Average relative PD: 0.773276
+Average training time: 78.5s
+Results saved to results/nanotransformer-gelu-20251208_032200.json
+📊 Saved training curves to plots/nanotransformer_gelu_cuda_training_curves.png
+📊 Saved reproducibility metrics to plots/nanotransformer_gelu_cuda_reproducibility.png
+📊 Saved summary metrics to plots/nanotransformer_gelu_cuda_summary.png
+✓ nanotransformer/gelu completed in 270.3s
+  Val loss: 1.9717
+  Relative PD: 0.773276
+
+[5/5] nanotransformer with swish...
+
+############################################################
+# EXPERIMENT: SWISH
+############################################################
+[INFO] Loaded 1,115,394 characters from data/shakespeare.txt
+[INFO] Train size: 1,003,854 characters
+[INFO] Val size: 111,540 characters
+[INFO] Vocabulary size: 65
+[INFO] Characters: 
+ !$&',-.3:;?ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz
+
+============================================================
+Training Trial 1
+============================================================
+Starting Trial 1 - 500 iterations
+Step     0 | Train loss: 4.3092 | Val loss: 4.3018 | Time: 8.3s
+Step    50 | Progress: 10.0% | Time: 10.6s
+Step   100 | Train loss: 2.4643 | Val loss: 2.4818 | Time: 21.3s
+Step   150 | Progress: 30.0% | Time: 23.6s
+Step   200 | Train loss: 2.3481 | Val loss: 2.3841 | Time: 34.3s
+Step   250 | Progress: 50.0% | Time: 36.6s
+Step   300 | Train loss: 2.2091 | Val loss: 2.2704 | Time: 47.4s
+Step   350 | Progress: 70.0% | Time: 49.8s
+Step   400 | Train loss: 2.0050 | Val loss: 2.1106 | Time: 60.7s
+Step   450 | Progress: 90.0% | Time: 63.0s
+Step   499 | Train loss: 1.8291 | Val loss: 1.9704 | Time: 73.8s
+
+Training completed in 73.77s
+Final train loss: 1.8312
+Final val loss: 1.9767
+Train accuracy: 39.70%
+Val accuracy: 35.80%
+Saved checkpoint to checkpoints/swish/trial_1.pt
+
+============================================================
+Training Trial 2
+============================================================
+Starting Trial 2 - 500 iterations
+Step     0 | Train loss: 4.1701 | Val loss: 4.1788 | Time: 8.3s
+Step    50 | Progress: 10.0% | Time: 10.7s
+Step   100 | Train loss: 2.4568 | Val loss: 2.4758 | Time: 21.5s
+Step   150 | Progress: 30.0% | Time: 23.9s
+Step   200 | Train loss: 2.3311 | Val loss: 2.3619 | Time: 34.7s
+Step   250 | Progress: 50.0% | Time: 37.1s
+Step   300 | Train loss: 2.2091 | Val loss: 2.2655 | Time: 47.7s
+Step   350 | Progress: 70.0% | Time: 50.0s
+Step   400 | Train loss: 2.0025 | Val loss: 2.0969 | Time: 61.7s
+Step   450 | Progress: 90.0% | Time: 64.0s
+Step   499 | Train loss: 1.8372 | Val loss: 1.9659 | Time: 75.8s
+
+Training completed in 75.86s
+Final train loss: 1.8421
+Final val loss: 1.9709
+Train accuracy: 41.30%
+Val accuracy: 37.20%
+Saved checkpoint to checkpoints/swish/trial_2.pt
+
+============================================================
+Training Trial 3
+============================================================
+Starting Trial 3 - 500 iterations
+Step     0 | Train loss: 4.2510 | Val loss: 4.2480 | Time: 8.1s
+Step    50 | Progress: 10.0% | Time: 10.4s
+Step   100 | Train loss: 2.4591 | Val loss: 2.4703 | Time: 21.0s
+Step   150 | Progress: 30.0% | Time: 23.3s
+Step   200 | Train loss: 2.3432 | Val loss: 2.3758 | Time: 33.9s
+Step   250 | Progress: 50.0% | Time: 36.2s
+Step   300 | Train loss: 2.2013 | Val loss: 2.2643 | Time: 47.0s
+Step   350 | Progress: 70.0% | Time: 49.3s
+Step   400 | Train loss: 2.0047 | Val loss: 2.0992 | Time: 60.1s
+Step   450 | Progress: 90.0% | Time: 62.4s
+Step   499 | Train loss: 1.8370 | Val loss: 1.9679 | Time: 73.2s
+
+Training completed in 73.21s
+Final train loss: 1.8371
+Final val loss: 1.9676
+Train accuracy: 42.50%
+Val accuracy: 39.10%
+Saved checkpoint to checkpoints/swish/trial_3.pt
+
+============================================================
+Calculating Reproducibility Metrics
+============================================================
+Comparing Model 1 vs Model 2...
+  Relative PD: 0.781969
+  Prediction differences: 932/1000
+Comparing Model 1 vs Model 3...
+  Relative PD: 0.772120
+  Prediction differences: 917/1000
+Comparing Model 2 vs Model 3...
+  Relative PD: 0.765738
+  Prediction differences: 895/1000
+
+============================================================
+Experiment Summary: nanotransformer with swish
+============================================================
+Average val loss: 1.9717 ± 0.0038
+Average val accuracy: 37.37% ± 1.35%
+Average relative PD: 0.773276
+Average training time: 74.3s
+Results saved to results/nanotransformer-swish-20251208_032617.json
+📊 Saved training curves to plots/nanotransformer_swish_cuda_training_curves.png
+📊 Saved reproducibility metrics to plots/nanotransformer_swish_cuda_reproducibility.png
+📊 Saved summary metrics to plots/nanotransformer_swish_cuda_summary.png
+✓ nanotransformer/swish completed in 257.1s
+  Val loss: 1.9717
+  Relative PD: 0.773276
+
+============================================================
+SUMMARY: nanotransformer
+============================================================
+gelu         - Loss: 1.9717, PD: 0.773276
+relu         - Loss: 1.9717, PD: 0.773276
+smelu_05     - Loss: 1.9717, PD: 0.773276
+smelu_1      - Loss: 1.9717, PD: 0.773276
+swish        - Loss: 1.9717, PD: 0.773276
+
+============================================================
+ALL EXPERIMENTS COMPLETED
+============================================================
+Total time: 1438.4s (24.0 minutes)
+Models: 1
+Total experiments: 5
+
+============================================================
+ALL EXPERIMENTS COMPLETE!
+============================================================
+Device used: CUDA
+Total time: 1438.4s (24.0 min)
+
+Results saved to: results/all_experiments_summary.json
+Individual results: results/{model}-{activation}-{timestamp}.json
+Plots saved to: plots/*_gpu_*.png
+
+Run "python process_results.py" to generate comprehensive plots and summary!

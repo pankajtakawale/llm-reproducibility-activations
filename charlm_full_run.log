@@ -1,0 +1,1192 @@
+/usr/local/lib/python3.12/dist-packages/torch/cuda/__init__.py:235: UserWarning: 
+NVIDIA GB10 with CUDA capability sm_121 is not compatible with the current PyTorch installation.
+The current PyTorch install supports CUDA capabilities sm_80 sm_86 sm_90 compute_90.
+If you want to use the NVIDIA GB10 GPU with PyTorch, please check the instructions at https://pytorch.org/get-started/locally/
+
+  warnings.warn(
+🔥 Using FULL GPU config (6 layers, 384 hidden, 5000 iters) - Publication Quality
+============================================================
+RUNNING MULTI-MODEL EXPERIMENTS
+============================================================
+Device: cuda
+Models: charlm (1 total)
+Activations: relu, gelu, swish (3 total)
+Iterations: 5000, Trials: 3
+Total experiments: 1 models × 3 activations = 3
+============================================================
+
+############################################################
+# MODEL 1/1: CHARLM
+############################################################
+
+[1/3] charlm with relu...
+
+############################################################
+# EXPERIMENT: RELU
+############################################################
+[INFO] Loaded 1,115,394 characters from data/shakespeare.txt
+[INFO] Train size: 1,003,854 characters
+[INFO] Val size: 111,540 characters
+[INFO] Vocabulary size: 65
+[INFO] Characters: 
+ !$&',-.3:;?ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz
+[INFO] Model initialized with 10,795,776 parameters
+
+============================================================
+Training Trial 1
+============================================================
+Starting Trial 1 - 5000 iterations
+Step     0 | Train loss: 4.3444 | Val loss: 4.3433 | Time: 92.2s
+Step    50 | Progress: 1.0% | Time: 168.9s
+Step   100 | Progress: 2.0% | Time: 180.7s
+Step   150 | Progress: 3.0% | Time: 192.4s
+Step   200 | Progress: 4.0% | Time: 204.2s
+Step   250 | Progress: 5.0% | Time: 216.1s
+Step   300 | Progress: 6.0% | Time: 228.0s
+Step   350 | Progress: 7.0% | Time: 240.0s
+Step   400 | Progress: 8.0% | Time: 251.9s
+Step   450 | Progress: 9.0% | Time: 263.9s
+Step   500 | Train loss: 1.7563 | Val loss: 1.9010 | Time: 307.9s
+Step   550 | Progress: 11.0% | Time: 319.5s
+Step   600 | Progress: 12.0% | Time: 331.4s
+Step   650 | Progress: 13.0% | Time: 343.1s
+Step   700 | Progress: 14.0% | Time: 355.0s
+Step   750 | Progress: 15.0% | Time: 366.1s
+Step   800 | Progress: 16.0% | Time: 376.9s
+Step   850 | Progress: 17.0% | Time: 387.8s
+Step   900 | Progress: 18.0% | Time: 398.6s
+Step   950 | Progress: 19.0% | Time: 409.5s
+Step  1000 | Train loss: 1.4049 | Val loss: 1.6182 | Time: 450.0s
+Step  1050 | Progress: 21.0% | Time: 460.6s
+Step  1100 | Progress: 22.0% | Time: 471.5s
+Step  1150 | Progress: 23.0% | Time: 482.4s
+Step  1200 | Progress: 24.0% | Time: 493.2s
+Step  1250 | Progress: 25.0% | Time: 504.1s
+Step  1300 | Progress: 26.0% | Time: 514.9s
+Step  1350 | Progress: 27.0% | Time: 525.8s
+Step  1400 | Progress: 28.0% | Time: 536.6s
+Step  1450 | Progress: 29.0% | Time: 547.5s
+Step  1500 | Train loss: 1.2774 | Val loss: 1.5428 | Time: 587.9s
+Step  1550 | Progress: 31.0% | Time: 598.6s
+Step  1600 | Progress: 32.0% | Time: 609.5s
+Step  1650 | Progress: 33.0% | Time: 620.3s
+Step  1700 | Progress: 34.0% | Time: 631.7s
+Step  1750 | Progress: 35.0% | Time: 643.5s
+Step  1800 | Progress: 36.0% | Time: 655.4s
+Step  1850 | Progress: 37.0% | Time: 667.2s
+Step  1900 | Progress: 38.0% | Time: 678.9s
+Step  1950 | Progress: 39.0% | Time: 690.6s
+Step  2000 | Train loss: 1.1941 | Val loss: 1.5016 | Time: 734.8s
+Step  2050 | Progress: 41.0% | Time: 746.5s
+Step  2100 | Progress: 42.0% | Time: 758.5s
+Step  2150 | Progress: 43.0% | Time: 770.5s
+Step  2200 | Progress: 44.0% | Time: 782.3s
+Step  2250 | Progress: 45.0% | Time: 794.2s
+Step  2300 | Progress: 46.0% | Time: 806.1s
+Step  2350 | Progress: 47.0% | Time: 818.1s
+Step  2400 | Progress: 48.0% | Time: 830.0s
+Step  2450 | Progress: 49.0% | Time: 842.1s
+Step  2500 | Train loss: 1.1343 | Val loss: 1.4908 | Time: 887.4s
+Step  2550 | Progress: 51.0% | Time: 899.1s
+Step  2600 | Progress: 52.0% | Time: 911.0s
+Step  2650 | Progress: 53.0% | Time: 922.7s
+Step  2700 | Progress: 54.0% | Time: 934.6s
+Step  2750 | Progress: 55.0% | Time: 946.4s
+Step  2800 | Progress: 56.0% | Time: 957.2s
+Step  2850 | Progress: 57.0% | Time: 968.1s
+Step  2900 | Progress: 58.0% | Time: 978.9s
+Step  2950 | Progress: 59.0% | Time: 989.7s
+Step  3000 | Train loss: 1.0752 | Val loss: 1.4929 | Time: 1030.1s
+Step  3050 | Progress: 61.0% | Time: 1040.7s
+Step  3100 | Progress: 62.0% | Time: 1051.6s
+Step  3150 | Progress: 63.0% | Time: 1062.4s
+Step  3200 | Progress: 64.0% | Time: 1073.3s
+Step  3250 | Progress: 65.0% | Time: 1084.1s
+Step  3300 | Progress: 66.0% | Time: 1094.9s
+Step  3350 | Progress: 67.0% | Time: 1105.8s
+Step  3400 | Progress: 68.0% | Time: 1116.7s
+Step  3450 | Progress: 69.0% | Time: 1127.5s
+Step  3500 | Train loss: 1.0221 | Val loss: 1.5088 | Time: 1167.9s
+Step  3550 | Progress: 71.0% | Time: 1178.6s
+Step  3600 | Progress: 72.0% | Time: 1189.4s
+Step  3650 | Progress: 73.0% | Time: 1200.3s
+Step  3700 | Progress: 74.0% | Time: 1211.1s
+Step  3750 | Progress: 75.0% | Time: 1221.9s
+Step  3800 | Progress: 76.0% | Time: 1232.8s
+Step  3850 | Progress: 77.0% | Time: 1243.6s
+Step  3900 | Progress: 78.0% | Time: 1254.5s
+Step  3950 | Progress: 79.0% | Time: 1265.3s
+Step  4000 | Train loss: 0.9666 | Val loss: 1.5075 | Time: 1306.9s
+Step  4050 | Progress: 81.0% | Time: 1317.6s
+Step  4100 | Progress: 82.0% | Time: 1328.4s
+Step  4150 | Progress: 83.0% | Time: 1339.3s
+Step  4200 | Progress: 84.0% | Time: 1350.1s
+Step  4250 | Progress: 85.0% | Time: 1361.0s
+Step  4300 | Progress: 86.0% | Time: 1371.8s
+Step  4350 | Progress: 87.0% | Time: 1382.7s
+Step  4400 | Progress: 88.0% | Time: 1393.5s
+Step  4450 | Progress: 89.0% | Time: 1404.4s
+Step  4500 | Train loss: 0.9190 | Val loss: 1.5496 | Time: 1445.5s
+Step  4550 | Progress: 91.0% | Time: 1456.2s
+Step  4600 | Progress: 92.0% | Time: 1467.0s
+Step  4650 | Progress: 93.0% | Time: 1477.8s
+Step  4700 | Progress: 94.0% | Time: 1488.7s
+Step  4750 | Progress: 95.0% | Time: 1499.6s
+Step  4800 | Progress: 96.0% | Time: 1510.4s
+Step  4850 | Progress: 97.0% | Time: 1521.2s
+Step  4900 | Progress: 98.0% | Time: 1532.1s
+Step  4950 | Progress: 99.0% | Time: 1542.9s
+Step  4999 | Train loss: 0.8667 | Val loss: 1.5628 | Time: 1583.0s
+
+Training completed in 1583.06s
+Final train loss: 0.8671
+Final val loss: 1.5538
+Train accuracy: 73.90%
+Val accuracy: 60.10%
+Saved checkpoint to checkpoints/relu/trial_1.pt
+[INFO] Model initialized with 10,795,776 parameters
+
+============================================================
+Training Trial 2
+============================================================
+Starting Trial 2 - 5000 iterations
+Step     0 | Train loss: 4.1337 | Val loss: 4.1370 | Time: 30.7s
+Step    50 | Progress: 1.0% | Time: 41.3s
+Step   100 | Progress: 2.0% | Time: 52.2s
+Step   150 | Progress: 3.0% | Time: 63.0s
+Step   200 | Progress: 4.0% | Time: 73.8s
+Step   250 | Progress: 5.0% | Time: 84.7s
+Step   300 | Progress: 6.0% | Time: 95.5s
+Step   350 | Progress: 7.0% | Time: 106.4s
+Step   400 | Progress: 8.0% | Time: 117.2s
+Step   450 | Progress: 9.0% | Time: 128.1s
+Step   500 | Train loss: 1.7895 | Val loss: 1.9287 | Time: 169.3s
+Step   550 | Progress: 11.0% | Time: 180.0s
+Step   600 | Progress: 12.0% | Time: 190.9s
+Step   650 | Progress: 13.0% | Time: 201.7s
+Step   700 | Progress: 14.0% | Time: 212.6s
+Step   750 | Progress: 15.0% | Time: 223.4s
+Step   800 | Progress: 16.0% | Time: 234.3s
+Step   850 | Progress: 17.0% | Time: 245.2s
+Step   900 | Progress: 18.0% | Time: 256.0s
+Step   950 | Progress: 19.0% | Time: 266.9s
+Step  1000 | Train loss: 1.4080 | Val loss: 1.6285 | Time: 307.8s
+Step  1050 | Progress: 21.0% | Time: 318.5s
+Step  1100 | Progress: 22.0% | Time: 329.4s
+Step  1150 | Progress: 23.0% | Time: 340.2s
+Step  1200 | Progress: 24.0% | Time: 351.1s
+Step  1250 | Progress: 25.0% | Time: 362.0s
+Step  1300 | Progress: 26.0% | Time: 372.8s
+Step  1350 | Progress: 27.0% | Time: 383.7s
+Step  1400 | Progress: 28.0% | Time: 394.6s
+Step  1450 | Progress: 29.0% | Time: 405.5s
+Step  1500 | Train loss: 1.2733 | Val loss: 1.5330 | Time: 446.3s
+Step  1550 | Progress: 31.0% | Time: 457.0s
+Step  1600 | Progress: 32.0% | Time: 467.8s
+Step  1650 | Progress: 33.0% | Time: 478.6s
+Step  1700 | Progress: 34.0% | Time: 489.5s
+Step  1750 | Progress: 35.0% | Time: 500.3s
+Step  1800 | Progress: 36.0% | Time: 511.2s
+Step  1850 | Progress: 37.0% | Time: 522.1s
+Step  1900 | Progress: 38.0% | Time: 532.9s
+Step  1950 | Progress: 39.0% | Time: 543.8s
+Step  2000 | Train loss: 1.1993 | Val loss: 1.4923 | Time: 584.3s
+Step  2050 | Progress: 41.0% | Time: 594.9s
+Step  2100 | Progress: 42.0% | Time: 605.7s
+Step  2150 | Progress: 43.0% | Time: 616.6s
+Step  2200 | Progress: 44.0% | Time: 627.5s
+Step  2250 | Progress: 45.0% | Time: 638.3s
+Step  2300 | Progress: 46.0% | Time: 649.2s
+Step  2350 | Progress: 47.0% | Time: 660.0s
+Step  2400 | Progress: 48.0% | Time: 670.9s
+Step  2450 | Progress: 49.0% | Time: 681.7s
+Step  2500 | Train loss: 1.1411 | Val loss: 1.5013 | Time: 722.0s
+Step  2550 | Progress: 51.0% | Time: 732.7s
+Step  2600 | Progress: 52.0% | Time: 743.5s
+Step  2650 | Progress: 53.0% | Time: 754.4s
+Step  2700 | Progress: 54.0% | Time: 765.2s
+Step  2750 | Progress: 55.0% | Time: 776.1s
+Step  2800 | Progress: 56.0% | Time: 786.9s
+Step  2850 | Progress: 57.0% | Time: 797.8s
+Step  2900 | Progress: 58.0% | Time: 808.7s
+Step  2950 | Progress: 59.0% | Time: 819.5s
+Step  3000 | Train loss: 1.0842 | Val loss: 1.4872 | Time: 860.7s
+Step  3050 | Progress: 61.0% | Time: 871.4s
+Step  3100 | Progress: 62.0% | Time: 882.3s
+Step  3150 | Progress: 63.0% | Time: 893.1s
+Step  3200 | Progress: 64.0% | Time: 904.0s
+Step  3250 | Progress: 65.0% | Time: 914.8s
+Step  3300 | Progress: 66.0% | Time: 925.7s
+Step  3350 | Progress: 67.0% | Time: 936.5s
+Step  3400 | Progress: 68.0% | Time: 947.3s
+Step  3450 | Progress: 69.0% | Time: 958.2s
+Step  3500 | Train loss: 1.0310 | Val loss: 1.4945 | Time: 998.6s
+Step  3550 | Progress: 71.0% | Time: 1009.2s
+Step  3600 | Progress: 72.0% | Time: 1020.1s
+Step  3650 | Progress: 73.0% | Time: 1030.9s
+Step  3700 | Progress: 74.0% | Time: 1041.8s
+Step  3750 | Progress: 75.0% | Time: 1052.7s
+Step  3800 | Progress: 76.0% | Time: 1063.5s
+Step  3850 | Progress: 77.0% | Time: 1074.4s
+Step  3900 | Progress: 78.0% | Time: 1085.3s
+Step  3950 | Progress: 79.0% | Time: 1096.2s
+Step  4000 | Train loss: 0.9825 | Val loss: 1.5222 | Time: 1136.9s
+Step  4050 | Progress: 81.0% | Time: 1147.6s
+Step  4100 | Progress: 82.0% | Time: 1158.5s
+Step  4150 | Progress: 83.0% | Time: 1169.4s
+Step  4200 | Progress: 84.0% | Time: 1180.3s
+Step  4250 | Progress: 85.0% | Time: 1191.1s
+Step  4300 | Progress: 86.0% | Time: 1202.0s
+Step  4350 | Progress: 87.0% | Time: 1212.9s
+Step  4400 | Progress: 88.0% | Time: 1223.7s
+Step  4450 | Progress: 89.0% | Time: 1234.6s
+Step  4500 | Train loss: 0.9254 | Val loss: 1.5491 | Time: 1275.4s
+Step  4550 | Progress: 91.0% | Time: 1286.1s
+Step  4600 | Progress: 92.0% | Time: 1296.9s
+Step  4650 | Progress: 93.0% | Time: 1307.7s
+Step  4700 | Progress: 94.0% | Time: 1318.6s
+Step  4750 | Progress: 95.0% | Time: 1329.5s
+Step  4800 | Progress: 96.0% | Time: 1340.3s
+Step  4850 | Progress: 97.0% | Time: 1351.2s
+Step  4900 | Progress: 98.0% | Time: 1362.0s
+Step  4950 | Progress: 99.0% | Time: 1372.9s
+Step  4999 | Train loss: 0.8807 | Val loss: 1.5518 | Time: 1413.3s
+
+Training completed in 1413.34s
+Final train loss: 0.8769
+Final val loss: 1.5527
+Train accuracy: 71.50%
+Val accuracy: 57.90%
+Saved checkpoint to checkpoints/relu/trial_2.pt
+[INFO] Model initialized with 10,795,776 parameters
+
+============================================================
+Training Trial 3
+============================================================
+Starting Trial 3 - 5000 iterations
+Step     0 | Train loss: 4.2358 | Val loss: 4.2312 | Time: 30.5s
+Step    50 | Progress: 1.0% | Time: 41.2s
+Step   100 | Progress: 2.0% | Time: 52.0s
+Step   150 | Progress: 3.0% | Time: 62.9s
+Step   200 | Progress: 4.0% | Time: 73.7s
+Step   250 | Progress: 5.0% | Time: 84.5s
+Step   300 | Progress: 6.0% | Time: 95.4s
+Step   350 | Progress: 7.0% | Time: 106.2s
+Step   400 | Progress: 8.0% | Time: 117.1s
+Step   450 | Progress: 9.0% | Time: 128.0s
+Step   500 | Train loss: 1.7527 | Val loss: 1.9035 | Time: 168.6s
+Step   550 | Progress: 11.0% | Time: 179.3s
+Step   600 | Progress: 12.0% | Time: 190.1s
+Step   650 | Progress: 13.0% | Time: 200.9s
+Step   700 | Progress: 14.0% | Time: 211.8s
+Step   750 | Progress: 15.0% | Time: 222.7s
+Step   800 | Progress: 16.0% | Time: 233.6s
+Step   850 | Progress: 17.0% | Time: 244.4s
+Step   900 | Progress: 18.0% | Time: 255.3s
+Step   950 | Progress: 19.0% | Time: 266.1s
+Step  1000 | Train loss: 1.4172 | Val loss: 1.6392 | Time: 307.3s
+Step  1050 | Progress: 21.0% | Time: 318.0s
+Step  1100 | Progress: 22.0% | Time: 328.8s
+Step  1150 | Progress: 23.0% | Time: 339.6s
+Step  1200 | Progress: 24.0% | Time: 350.5s
+Step  1250 | Progress: 25.0% | Time: 361.3s
+Step  1300 | Progress: 26.0% | Time: 372.2s
+Step  1350 | Progress: 27.0% | Time: 383.0s
+Step  1400 | Progress: 28.0% | Time: 393.9s
+Step  1450 | Progress: 29.0% | Time: 404.7s
+Step  1500 | Train loss: 1.2870 | Val loss: 1.5520 | Time: 446.6s
+Step  1550 | Progress: 31.0% | Time: 457.3s
+Step  1600 | Progress: 32.0% | Time: 468.1s
+Step  1650 | Progress: 33.0% | Time: 479.0s
+Step  1700 | Progress: 34.0% | Time: 489.8s
+Step  1750 | Progress: 35.0% | Time: 500.7s
+Step  1800 | Progress: 36.0% | Time: 511.5s
+Step  1850 | Progress: 37.0% | Time: 522.3s
+Step  1900 | Progress: 38.0% | Time: 533.2s
+Step  1950 | Progress: 39.0% | Time: 544.0s
+Step  2000 | Train loss: 1.1979 | Val loss: 1.5106 | Time: 586.0s
+Step  2050 | Progress: 41.0% | Time: 596.7s
+Step  2100 | Progress: 42.0% | Time: 607.6s
+Step  2150 | Progress: 43.0% | Time: 618.4s
+Step  2200 | Progress: 44.0% | Time: 629.3s
+Step  2250 | Progress: 45.0% | Time: 640.1s
+Step  2300 | Progress: 46.0% | Time: 650.9s
+Step  2350 | Progress: 47.0% | Time: 661.8s
+Step  2400 | Progress: 48.0% | Time: 672.6s
+Step  2450 | Progress: 49.0% | Time: 683.5s
+Step  2500 | Train loss: 1.1406 | Val loss: 1.4928 | Time: 725.4s
+Step  2550 | Progress: 51.0% | Time: 736.0s
+Step  2600 | Progress: 52.0% | Time: 746.9s
+Step  2650 | Progress: 53.0% | Time: 757.8s
+Step  2700 | Progress: 54.0% | Time: 768.6s
+Step  2750 | Progress: 55.0% | Time: 779.4s
+Step  2800 | Progress: 56.0% | Time: 790.3s
+Step  2850 | Progress: 57.0% | Time: 801.2s
+Step  2900 | Progress: 58.0% | Time: 812.0s
+Step  2950 | Progress: 59.0% | Time: 822.8s
+Step  3000 | Train loss: 1.0814 | Val loss: 1.5005 | Time: 864.6s
+Step  3050 | Progress: 61.0% | Time: 875.3s
+Step  3100 | Progress: 62.0% | Time: 886.1s
+Step  3150 | Progress: 63.0% | Time: 897.0s
+Step  3200 | Progress: 64.0% | Time: 907.8s
+Step  3250 | Progress: 65.0% | Time: 918.7s
+Step  3300 | Progress: 66.0% | Time: 929.5s
+Step  3350 | Progress: 67.0% | Time: 940.4s
+Step  3400 | Progress: 68.0% | Time: 951.2s
+Step  3450 | Progress: 69.0% | Time: 962.0s
+Step  3500 | Train loss: 1.0300 | Val loss: 1.5061 | Time: 1003.7s
+Step  3550 | Progress: 71.0% | Time: 1014.4s
+Step  3600 | Progress: 72.0% | Time: 1025.3s
+Step  3650 | Progress: 73.0% | Time: 1036.2s
+Step  3700 | Progress: 74.0% | Time: 1047.0s
+Step  3750 | Progress: 75.0% | Time: 1057.8s
+Step  3800 | Progress: 76.0% | Time: 1068.7s
+Step  3850 | Progress: 77.0% | Time: 1079.5s
+Step  3900 | Progress: 78.0% | Time: 1090.4s
+Step  3950 | Progress: 79.0% | Time: 1101.2s
+Step  4000 | Train loss: 0.9766 | Val loss: 1.5236 | Time: 1143.0s
+Step  4050 | Progress: 81.0% | Time: 1153.7s
+Step  4100 | Progress: 82.0% | Time: 1164.6s
+Step  4150 | Progress: 83.0% | Time: 1175.4s
+Step  4200 | Progress: 84.0% | Time: 1186.3s
+Step  4250 | Progress: 85.0% | Time: 1197.1s
+Step  4300 | Progress: 86.0% | Time: 1207.9s
+Step  4350 | Progress: 87.0% | Time: 1218.8s
+Step  4400 | Progress: 88.0% | Time: 1229.6s
+Step  4450 | Progress: 89.0% | Time: 1240.5s
+Step  4500 | Train loss: 0.9309 | Val loss: 1.5507 | Time: 1281.2s
+Step  4550 | Progress: 91.0% | Time: 1291.8s
+Step  4600 | Progress: 92.0% | Time: 1302.7s
+Step  4650 | Progress: 93.0% | Time: 1313.5s
+Step  4700 | Progress: 94.0% | Time: 1324.4s
+Step  4750 | Progress: 95.0% | Time: 1335.2s
+Step  4800 | Progress: 96.0% | Time: 1346.1s
+Step  4850 | Progress: 97.0% | Time: 1356.9s
+Step  4900 | Progress: 98.0% | Time: 1367.7s
+Step  4950 | Progress: 99.0% | Time: 1378.6s
+Step  4999 | Train loss: 0.8728 | Val loss: 1.5577 | Time: 1419.1s
+
+Training completed in 1419.12s
+Final train loss: 0.8744
+Final val loss: 1.5601
+Train accuracy: 73.90%
+Val accuracy: 57.70%
+Saved checkpoint to checkpoints/relu/trial_3.pt
+
+============================================================
+Calculating Reproducibility Metrics
+============================================================
+Comparing Model 1 vs Model 2...
+  Relative PD: 0.908809
+  Prediction differences: 937/1000
+Comparing Model 1 vs Model 3...
+  Relative PD: 0.895457
+  Prediction differences: 922/1000
+Comparing Model 2 vs Model 3...
+  Relative PD: 0.914136
+  Prediction differences: 949/1000
+
+============================================================
+Experiment Summary: charlm with relu
+============================================================
+Average val loss: 1.5555 ± 0.0033
+Average val accuracy: 58.57% ± 1.09%
+Average relative PD: 0.906134
+Average training time: 1471.8s
+Results saved to results/charlm-relu-20251208_151223.json
+📊 Saved training curves to plots/charlm_relu_cuda_training_curves.png
+📊 Saved reproducibility metrics to plots/charlm_relu_cuda_reproducibility.png
+📊 Saved summary metrics to plots/charlm_relu_cuda_summary.png
+✓ charlm/relu completed in 4530.4s
+  Val loss: 1.5555
+  Relative PD: 0.906134
+
+[2/3] charlm with gelu...
+
+############################################################
+# EXPERIMENT: GELU
+############################################################
+[INFO] Loaded 1,115,394 characters from data/shakespeare.txt
+[INFO] Train size: 1,003,854 characters
+[INFO] Val size: 111,540 characters
+[INFO] Vocabulary size: 65
+[INFO] Characters: 
+ !$&',-.3:;?ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz
+[INFO] Model initialized with 10,795,776 parameters
+
+============================================================
+Training Trial 1
+============================================================
+Starting Trial 1 - 5000 iterations
+Step     0 | Train loss: 4.2648 | Val loss: 4.2650 | Time: 32.6s
+Step    50 | Progress: 1.0% | Time: 43.2s
+Step   100 | Progress: 2.0% | Time: 54.1s
+Step   150 | Progress: 3.0% | Time: 65.0s
+Step   200 | Progress: 4.0% | Time: 75.9s
+Step   250 | Progress: 5.0% | Time: 86.8s
+Step   300 | Progress: 6.0% | Time: 97.6s
+Step   350 | Progress: 7.0% | Time: 108.5s
+Step   400 | Progress: 8.0% | Time: 119.3s
+Step   450 | Progress: 9.0% | Time: 130.2s
+Step   500 | Train loss: 1.9926 | Val loss: 2.0737 | Time: 170.6s
+Step   550 | Progress: 11.0% | Time: 181.3s
+Step   600 | Progress: 12.0% | Time: 192.1s
+Step   650 | Progress: 13.0% | Time: 203.0s
+Step   700 | Progress: 14.0% | Time: 213.8s
+Step   750 | Progress: 15.0% | Time: 224.7s
+Step   800 | Progress: 16.0% | Time: 235.5s
+Step   850 | Progress: 17.0% | Time: 246.4s
+Step   900 | Progress: 18.0% | Time: 257.3s
+Step   950 | Progress: 19.0% | Time: 268.2s
+Step  1000 | Train loss: 1.4963 | Val loss: 1.6781 | Time: 308.7s
+Step  1050 | Progress: 21.0% | Time: 319.4s
+Step  1100 | Progress: 22.0% | Time: 330.2s
+Step  1150 | Progress: 23.0% | Time: 341.1s
+Step  1200 | Progress: 24.0% | Time: 352.0s
+Step  1250 | Progress: 25.0% | Time: 362.9s
+Step  1300 | Progress: 26.0% | Time: 373.7s
+Step  1350 | Progress: 27.0% | Time: 384.6s
+Step  1400 | Progress: 28.0% | Time: 395.4s
+Step  1450 | Progress: 29.0% | Time: 406.3s
+Step  1500 | Train loss: 1.3346 | Val loss: 1.5670 | Time: 447.5s
+Step  1550 | Progress: 31.0% | Time: 458.2s
+Step  1600 | Progress: 32.0% | Time: 469.1s
+Step  1650 | Progress: 33.0% | Time: 480.0s
+Step  1700 | Progress: 34.0% | Time: 490.9s
+Step  1750 | Progress: 35.0% | Time: 501.7s
+Step  1800 | Progress: 36.0% | Time: 512.6s
+Step  1850 | Progress: 37.0% | Time: 523.5s
+Step  1900 | Progress: 38.0% | Time: 534.3s
+Step  1950 | Progress: 39.0% | Time: 545.2s
+Step  2000 | Train loss: 1.2355 | Val loss: 1.5009 | Time: 586.7s
+Step  2050 | Progress: 41.0% | Time: 597.4s
+Step  2100 | Progress: 42.0% | Time: 608.3s
+Step  2150 | Progress: 43.0% | Time: 619.2s
+Step  2200 | Progress: 44.0% | Time: 630.0s
+Step  2250 | Progress: 45.0% | Time: 640.9s
+Step  2300 | Progress: 46.0% | Time: 651.7s
+Step  2350 | Progress: 47.0% | Time: 662.6s
+Step  2400 | Progress: 48.0% | Time: 673.6s
+Step  2450 | Progress: 49.0% | Time: 684.5s
+Step  2500 | Train loss: 1.1682 | Val loss: 1.4819 | Time: 725.0s
+Step  2550 | Progress: 51.0% | Time: 735.6s
+Step  2600 | Progress: 52.0% | Time: 746.5s
+Step  2650 | Progress: 53.0% | Time: 757.4s
+Step  2700 | Progress: 54.0% | Time: 768.3s
+Step  2750 | Progress: 55.0% | Time: 779.2s
+Step  2800 | Progress: 56.0% | Time: 790.1s
+Step  2850 | Progress: 57.0% | Time: 800.9s
+Step  2900 | Progress: 58.0% | Time: 811.8s
+Step  2950 | Progress: 59.0% | Time: 822.6s
+Step  3000 | Train loss: 1.1029 | Val loss: 1.4761 | Time: 863.1s
+Step  3050 | Progress: 61.0% | Time: 873.8s
+Step  3100 | Progress: 62.0% | Time: 884.7s
+Step  3150 | Progress: 63.0% | Time: 895.5s
+Step  3200 | Progress: 64.0% | Time: 906.4s
+Step  3250 | Progress: 65.0% | Time: 917.3s
+Step  3300 | Progress: 66.0% | Time: 928.1s
+Step  3350 | Progress: 67.0% | Time: 939.0s
+Step  3400 | Progress: 68.0% | Time: 949.9s
+Step  3450 | Progress: 69.0% | Time: 960.7s
+Step  3500 | Train loss: 1.0438 | Val loss: 1.4928 | Time: 1000.9s
+Step  3550 | Progress: 71.0% | Time: 1011.6s
+Step  3600 | Progress: 72.0% | Time: 1022.4s
+Step  3650 | Progress: 73.0% | Time: 1033.3s
+Step  3700 | Progress: 74.0% | Time: 1044.1s
+Step  3750 | Progress: 75.0% | Time: 1055.0s
+Step  3800 | Progress: 76.0% | Time: 1065.8s
+Step  3850 | Progress: 77.0% | Time: 1076.7s
+Step  3900 | Progress: 78.0% | Time: 1087.5s
+Step  3950 | Progress: 79.0% | Time: 1098.4s
+Step  4000 | Train loss: 0.9829 | Val loss: 1.4942 | Time: 1139.9s
+Step  4050 | Progress: 81.0% | Time: 1150.6s
+Step  4100 | Progress: 82.0% | Time: 1161.5s
+Step  4150 | Progress: 83.0% | Time: 1172.3s
+Step  4200 | Progress: 84.0% | Time: 1183.2s
+Step  4250 | Progress: 85.0% | Time: 1194.1s
+Step  4300 | Progress: 86.0% | Time: 1204.9s
+Step  4350 | Progress: 87.0% | Time: 1215.8s
+Step  4400 | Progress: 88.0% | Time: 1226.6s
+Step  4450 | Progress: 89.0% | Time: 1237.5s
+Step  4500 | Train loss: 0.9192 | Val loss: 1.5338 | Time: 1278.9s
+Step  4550 | Progress: 91.0% | Time: 1289.6s
+Step  4600 | Progress: 92.0% | Time: 1300.4s
+Step  4650 | Progress: 93.0% | Time: 1311.3s
+Step  4700 | Progress: 94.0% | Time: 1322.2s
+Step  4750 | Progress: 95.0% | Time: 1333.0s
+Step  4800 | Progress: 96.0% | Time: 1343.9s
+Step  4850 | Progress: 97.0% | Time: 1354.7s
+Step  4900 | Progress: 98.0% | Time: 1365.6s
+Step  4950 | Progress: 99.0% | Time: 1376.4s
+Step  4999 | Train loss: 0.8565 | Val loss: 1.5643 | Time: 1417.1s
+
+Training completed in 1417.09s
+Final train loss: 0.8576
+Final val loss: 1.5585
+Train accuracy: 73.40%
+Val accuracy: 61.10%
+Saved checkpoint to checkpoints/gelu/trial_1.pt
+[INFO] Model initialized with 10,795,776 parameters
+
+============================================================
+Training Trial 2
+============================================================
+Starting Trial 2 - 5000 iterations
+Step     0 | Train loss: 4.2016 | Val loss: 4.2023 | Time: 29.5s
+Step    50 | Progress: 1.0% | Time: 40.2s
+Step   100 | Progress: 2.0% | Time: 51.1s
+Step   150 | Progress: 3.0% | Time: 62.0s
+Step   200 | Progress: 4.0% | Time: 72.8s
+Step   250 | Progress: 5.0% | Time: 83.7s
+Step   300 | Progress: 6.0% | Time: 94.6s
+Step   350 | Progress: 7.0% | Time: 105.5s
+Step   400 | Progress: 8.0% | Time: 116.4s
+Step   450 | Progress: 9.0% | Time: 127.2s
+Step   500 | Train loss: 2.0763 | Val loss: 2.1355 | Time: 167.7s
+Step   550 | Progress: 11.0% | Time: 178.3s
+Step   600 | Progress: 12.0% | Time: 189.2s
+Step   650 | Progress: 13.0% | Time: 200.0s
+Step   700 | Progress: 14.0% | Time: 210.9s
+Step   750 | Progress: 15.0% | Time: 221.8s
+Step   800 | Progress: 16.0% | Time: 232.6s
+Step   850 | Progress: 17.0% | Time: 243.5s
+Step   900 | Progress: 18.0% | Time: 254.3s
+Step   950 | Progress: 19.0% | Time: 265.2s
+Step  1000 | Train loss: 1.5698 | Val loss: 1.7610 | Time: 305.9s
+Step  1050 | Progress: 21.0% | Time: 316.5s
+Step  1100 | Progress: 22.0% | Time: 327.4s
+Step  1150 | Progress: 23.0% | Time: 338.3s
+Step  1200 | Progress: 24.0% | Time: 349.2s
+Step  1250 | Progress: 25.0% | Time: 360.0s
+Step  1300 | Progress: 26.0% | Time: 370.9s
+Step  1350 | Progress: 27.0% | Time: 381.8s
+Step  1400 | Progress: 28.0% | Time: 392.6s
+Step  1450 | Progress: 29.0% | Time: 403.5s
+Step  1500 | Train loss: 1.3812 | Val loss: 1.5898 | Time: 443.7s
+Step  1550 | Progress: 31.0% | Time: 454.3s
+Step  1600 | Progress: 32.0% | Time: 465.2s
+Step  1650 | Progress: 33.0% | Time: 476.1s
+Step  1700 | Progress: 34.0% | Time: 486.9s
+Step  1750 | Progress: 35.0% | Time: 497.7s
+Step  1800 | Progress: 36.0% | Time: 508.6s
+Step  1850 | Progress: 37.0% | Time: 519.5s
+Step  1900 | Progress: 38.0% | Time: 530.3s
+Step  1950 | Progress: 39.0% | Time: 541.2s
+Step  2000 | Train loss: 1.2854 | Val loss: 1.5225 | Time: 582.2s
+Step  2050 | Progress: 41.0% | Time: 593.0s
+Step  2100 | Progress: 42.0% | Time: 603.8s
+Step  2150 | Progress: 43.0% | Time: 614.7s
+Step  2200 | Progress: 44.0% | Time: 625.6s
+Step  2250 | Progress: 45.0% | Time: 636.5s
+Step  2300 | Progress: 46.0% | Time: 647.3s
+Step  2350 | Progress: 47.0% | Time: 658.2s
+Step  2400 | Progress: 48.0% | Time: 669.1s
+Step  2450 | Progress: 49.0% | Time: 680.0s
+Step  2500 | Train loss: 1.2181 | Val loss: 1.5033 | Time: 721.7s
+Step  2550 | Progress: 51.0% | Time: 732.4s
+Step  2600 | Progress: 52.0% | Time: 743.2s
+Step  2650 | Progress: 53.0% | Time: 754.1s
+Step  2700 | Progress: 54.0% | Time: 764.9s
+Step  2750 | Progress: 55.0% | Time: 775.8s
+Step  2800 | Progress: 56.0% | Time: 786.7s
+Step  2850 | Progress: 57.0% | Time: 797.6s
+Step  2900 | Progress: 58.0% | Time: 808.5s
+Step  2950 | Progress: 59.0% | Time: 819.3s
+Step  3000 | Train loss: 1.1599 | Val loss: 1.4862 | Time: 860.3s
+Step  3050 | Progress: 61.0% | Time: 871.0s
+Step  3100 | Progress: 62.0% | Time: 881.9s
+Step  3150 | Progress: 63.0% | Time: 892.7s
+Step  3200 | Progress: 64.0% | Time: 903.6s
+Step  3250 | Progress: 65.0% | Time: 914.5s
+Step  3300 | Progress: 66.0% | Time: 925.3s
+Step  3350 | Progress: 67.0% | Time: 936.2s
+Step  3400 | Progress: 68.0% | Time: 947.1s
+Step  3450 | Progress: 69.0% | Time: 958.0s
+Step  3500 | Train loss: 1.1050 | Val loss: 1.4763 | Time: 999.5s
+Step  3550 | Progress: 71.0% | Time: 1010.2s
+Step  3600 | Progress: 72.0% | Time: 1021.1s
+Step  3650 | Progress: 73.0% | Time: 1032.0s
+Step  3700 | Progress: 74.0% | Time: 1042.8s
+Step  3750 | Progress: 75.0% | Time: 1053.6s
+Step  3800 | Progress: 76.0% | Time: 1064.5s
+Step  3850 | Progress: 77.0% | Time: 1075.4s
+Step  3900 | Progress: 78.0% | Time: 1086.3s
+Step  3950 | Progress: 79.0% | Time: 1097.2s
+Step  4000 | Train loss: 1.0580 | Val loss: 1.4905 | Time: 1137.7s
+Step  4050 | Progress: 81.0% | Time: 1148.4s
+Step  4100 | Progress: 82.0% | Time: 1159.2s
+Step  4150 | Progress: 83.0% | Time: 1170.1s
+Step  4200 | Progress: 84.0% | Time: 1181.0s
+Step  4250 | Progress: 85.0% | Time: 1191.9s
+Step  4300 | Progress: 86.0% | Time: 1202.7s
+Step  4350 | Progress: 87.0% | Time: 1213.6s
+Step  4400 | Progress: 88.0% | Time: 1224.4s
+Step  4450 | Progress: 89.0% | Time: 1235.3s
+Step  4500 | Train loss: 1.0041 | Val loss: 1.5111 | Time: 1276.8s
+Step  4550 | Progress: 91.0% | Time: 1287.5s
+Step  4600 | Progress: 92.0% | Time: 1298.4s
+Step  4650 | Progress: 93.0% | Time: 1309.3s
+Step  4700 | Progress: 94.0% | Time: 1320.1s
+Step  4750 | Progress: 95.0% | Time: 1331.0s
+Step  4800 | Progress: 96.0% | Time: 1341.9s
+Step  4850 | Progress: 97.0% | Time: 1352.7s
+Step  4900 | Progress: 98.0% | Time: 1363.6s
+Step  4950 | Progress: 99.0% | Time: 1374.5s
+Step  4999 | Train loss: 0.9538 | Val loss: 1.5252 | Time: 1414.8s
+
+Training completed in 1414.86s
+Final train loss: 0.9524
+Final val loss: 1.5268
+Train accuracy: 70.40%
+Val accuracy: 59.10%
+Saved checkpoint to checkpoints/gelu/trial_2.pt
+[INFO] Model initialized with 10,795,776 parameters
+
+============================================================
+Training Trial 3
+============================================================
+Starting Trial 3 - 5000 iterations
+Step     0 | Train loss: 4.2557 | Val loss: 4.2519 | Time: 30.3s
+Step    50 | Progress: 1.0% | Time: 41.0s
+Step   100 | Progress: 2.0% | Time: 51.9s
+Step   150 | Progress: 3.0% | Time: 62.7s
+Step   200 | Progress: 4.0% | Time: 73.6s
+Step   250 | Progress: 5.0% | Time: 84.4s
+Step   300 | Progress: 6.0% | Time: 95.3s
+Step   350 | Progress: 7.0% | Time: 106.1s
+Step   400 | Progress: 8.0% | Time: 117.0s
+Step   450 | Progress: 9.0% | Time: 127.8s
+Step   500 | Train loss: 2.0887 | Val loss: 2.1576 | Time: 168.1s
+Step   550 | Progress: 11.0% | Time: 178.8s
+Step   600 | Progress: 12.0% | Time: 189.6s
+Step   650 | Progress: 13.0% | Time: 200.5s
+Step   700 | Progress: 14.0% | Time: 211.4s
+Step   750 | Progress: 15.0% | Time: 222.2s
+Step   800 | Progress: 16.0% | Time: 233.0s
+Step   850 | Progress: 17.0% | Time: 243.9s
+Step   900 | Progress: 18.0% | Time: 254.7s
+Step   950 | Progress: 19.0% | Time: 265.6s
+Step  1000 | Train loss: 1.5147 | Val loss: 1.6977 | Time: 305.8s
+Step  1050 | Progress: 21.0% | Time: 316.4s
+Step  1100 | Progress: 22.0% | Time: 327.3s
+Step  1150 | Progress: 23.0% | Time: 338.1s
+Step  1200 | Progress: 24.0% | Time: 349.0s
+Step  1250 | Progress: 25.0% | Time: 359.8s
+Step  1300 | Progress: 26.0% | Time: 370.7s
+Step  1350 | Progress: 27.0% | Time: 381.6s
+Step  1400 | Progress: 28.0% | Time: 392.4s
+Step  1450 | Progress: 29.0% | Time: 403.3s
+Step  1500 | Train loss: 1.3312 | Val loss: 1.5703 | Time: 444.4s
+Step  1550 | Progress: 31.0% | Time: 455.0s
+Step  1600 | Progress: 32.0% | Time: 465.9s
+Step  1650 | Progress: 33.0% | Time: 476.7s
+Step  1700 | Progress: 34.0% | Time: 487.5s
+Step  1750 | Progress: 35.0% | Time: 498.4s
+Step  1800 | Progress: 36.0% | Time: 509.2s
+Step  1850 | Progress: 37.0% | Time: 520.1s
+Step  1900 | Progress: 38.0% | Time: 531.0s
+Step  1950 | Progress: 39.0% | Time: 541.8s
+Step  2000 | Train loss: 1.2227 | Val loss: 1.5011 | Time: 582.7s
+Step  2050 | Progress: 41.0% | Time: 593.4s
+Step  2100 | Progress: 42.0% | Time: 604.3s
+Step  2150 | Progress: 43.0% | Time: 615.1s
+Step  2200 | Progress: 44.0% | Time: 625.9s
+Step  2250 | Progress: 45.0% | Time: 636.8s
+Step  2300 | Progress: 46.0% | Time: 647.6s
+Step  2350 | Progress: 47.0% | Time: 658.5s
+Step  2400 | Progress: 48.0% | Time: 669.3s
+Step  2450 | Progress: 49.0% | Time: 680.1s
+Step  2500 | Train loss: 1.1490 | Val loss: 1.4685 | Time: 720.7s
+Step  2550 | Progress: 51.0% | Time: 731.4s
+Step  2600 | Progress: 52.0% | Time: 742.2s
+Step  2650 | Progress: 53.0% | Time: 753.1s
+Step  2700 | Progress: 54.0% | Time: 764.0s
+Step  2750 | Progress: 55.0% | Time: 774.8s
+Step  2800 | Progress: 56.0% | Time: 785.7s
+Step  2850 | Progress: 57.0% | Time: 796.5s
+Step  2900 | Progress: 58.0% | Time: 807.3s
+Step  2950 | Progress: 59.0% | Time: 818.2s
+Step  3000 | Train loss: 1.0825 | Val loss: 1.4829 | Time: 858.2s
+Step  3050 | Progress: 61.0% | Time: 868.8s
+Step  3100 | Progress: 62.0% | Time: 879.7s
+Step  3150 | Progress: 63.0% | Time: 890.6s
+Step  3200 | Progress: 64.0% | Time: 901.4s
+Step  3250 | Progress: 65.0% | Time: 912.3s
+Step  3300 | Progress: 66.0% | Time: 923.1s
+Step  3350 | Progress: 67.0% | Time: 934.0s
+Step  3400 | Progress: 68.0% | Time: 944.8s
+Step  3450 | Progress: 69.0% | Time: 955.7s
+Step  3500 | Train loss: 1.0194 | Val loss: 1.4878 | Time: 996.1s
+Step  3550 | Progress: 71.0% | Time: 1006.7s
+Step  3600 | Progress: 72.0% | Time: 1017.6s
+Step  3650 | Progress: 73.0% | Time: 1028.4s
+Step  3700 | Progress: 74.0% | Time: 1039.3s
+Step  3750 | Progress: 75.0% | Time: 1050.2s
+Step  3800 | Progress: 76.0% | Time: 1061.0s
+Step  3850 | Progress: 77.0% | Time: 1071.9s
+Step  3900 | Progress: 78.0% | Time: 1082.8s
+Step  3950 | Progress: 79.0% | Time: 1093.7s
+Step  4000 | Train loss: 0.9547 | Val loss: 1.5105 | Time: 1133.8s
+Step  4050 | Progress: 81.0% | Time: 1144.5s
+Step  4100 | Progress: 82.0% | Time: 1155.3s
+Step  4150 | Progress: 83.0% | Time: 1166.2s
+Step  4200 | Progress: 84.0% | Time: 1177.1s
+Step  4250 | Progress: 85.0% | Time: 1188.0s
+Step  4300 | Progress: 86.0% | Time: 1198.9s
+Step  4350 | Progress: 87.0% | Time: 1209.7s
+Step  4400 | Progress: 88.0% | Time: 1220.6s
+Step  4450 | Progress: 89.0% | Time: 1231.5s
+Step  4500 | Train loss: 0.8952 | Val loss: 1.5392 | Time: 1271.4s
+Step  4550 | Progress: 91.0% | Time: 1282.1s
+Step  4600 | Progress: 92.0% | Time: 1293.0s
+Step  4650 | Progress: 93.0% | Time: 1303.8s
+Step  4700 | Progress: 94.0% | Time: 1314.7s
+Step  4750 | Progress: 95.0% | Time: 1325.5s
+Step  4800 | Progress: 96.0% | Time: 1336.4s
+Step  4850 | Progress: 97.0% | Time: 1347.2s
+Step  4900 | Progress: 98.0% | Time: 1358.1s
+Step  4950 | Progress: 99.0% | Time: 1369.0s
+Step  4999 | Train loss: 0.8264 | Val loss: 1.5749 | Time: 1409.0s
+
+Training completed in 1409.02s
+Final train loss: 0.8286
+Final val loss: 1.5767
+Train accuracy: 74.10%
+Val accuracy: 59.40%
+Saved checkpoint to checkpoints/gelu/trial_3.pt
+
+============================================================
+Calculating Reproducibility Metrics
+============================================================
+Comparing Model 1 vs Model 2...
+  Relative PD: 0.907936
+  Prediction differences: 942/1000
+Comparing Model 1 vs Model 3...
+  Relative PD: 0.897776
+  Prediction differences: 929/1000
+Comparing Model 2 vs Model 3...
+  Relative PD: 0.909555
+  Prediction differences: 935/1000
+
+============================================================
+Experiment Summary: charlm with gelu
+============================================================
+Average val loss: 1.5540 ± 0.0206
+Average val accuracy: 59.87% ± 0.88%
+Average relative PD: 0.905089
+Average training time: 1413.7s
+Results saved to results/charlm-gelu-20251208_162452.json
+📊 Saved training curves to plots/charlm_gelu_cuda_training_curves.png
+📊 Saved reproducibility metrics to plots/charlm_gelu_cuda_reproducibility.png
+📊 Saved summary metrics to plots/charlm_gelu_cuda_summary.png
+✓ charlm/gelu completed in 4348.8s
+  Val loss: 1.5540
+  Relative PD: 0.905089
+
+[3/3] charlm with swish...
+
+############################################################
+# EXPERIMENT: SWISH
+############################################################
+[INFO] Loaded 1,115,394 characters from data/shakespeare.txt
+[INFO] Train size: 1,003,854 characters
+[INFO] Val size: 111,540 characters
+[INFO] Vocabulary size: 65
+[INFO] Characters: 
+ !$&',-.3:;?ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz
+[INFO] Model initialized with 10,795,776 parameters
+
+============================================================
+Training Trial 1
+============================================================
+Starting Trial 1 - 5000 iterations
+Step     0 | Train loss: 4.2428 | Val loss: 4.2434 | Time: 35.9s
+Step    50 | Progress: 1.0% | Time: 51.8s
+Step   100 | Progress: 2.0% | Time: 64.4s
+Step   150 | Progress: 3.0% | Time: 77.0s
+Step   200 | Progress: 4.0% | Time: 89.6s
+Step   250 | Progress: 5.0% | Time: 102.2s
+Step   300 | Progress: 6.0% | Time: 114.8s
+Step   350 | Progress: 7.0% | Time: 127.4s
+Step   400 | Progress: 8.0% | Time: 140.0s
+Step   450 | Progress: 9.0% | Time: 152.6s
+Step   500 | Train loss: 2.1334 | Val loss: 2.1771 | Time: 199.0s
+Step   550 | Progress: 11.0% | Time: 211.4s
+Step   600 | Progress: 12.0% | Time: 224.0s
+Step   650 | Progress: 13.0% | Time: 236.5s
+Step   700 | Progress: 14.0% | Time: 249.1s
+Step   750 | Progress: 15.0% | Time: 261.7s
+Step   800 | Progress: 16.0% | Time: 274.2s
+Step   850 | Progress: 17.0% | Time: 286.8s
+Step   900 | Progress: 18.0% | Time: 299.4s
+Step   950 | Progress: 19.0% | Time: 312.0s
+Step  1000 | Train loss: 1.7093 | Val loss: 1.8647 | Time: 357.6s
+Step  1050 | Progress: 21.0% | Time: 370.0s
+Step  1100 | Progress: 22.0% | Time: 382.5s
+Step  1150 | Progress: 23.0% | Time: 395.2s
+Step  1200 | Progress: 24.0% | Time: 407.7s
+Step  1250 | Progress: 25.0% | Time: 420.3s
+Step  1300 | Progress: 26.0% | Time: 432.8s
+Step  1350 | Progress: 27.0% | Time: 445.4s
+Step  1400 | Progress: 28.0% | Time: 458.1s
+Step  1450 | Progress: 29.0% | Time: 470.6s
+Step  1500 | Train loss: 1.5154 | Val loss: 1.7154 | Time: 516.8s
+Step  1550 | Progress: 31.0% | Time: 529.1s
+Step  1600 | Progress: 32.0% | Time: 541.7s
+Step  1650 | Progress: 33.0% | Time: 554.3s
+Step  1700 | Progress: 34.0% | Time: 566.8s
+Step  1750 | Progress: 35.0% | Time: 579.4s
+Step  1800 | Progress: 36.0% | Time: 592.0s
+Step  1850 | Progress: 37.0% | Time: 604.6s
+Step  1900 | Progress: 38.0% | Time: 617.2s
+Step  1950 | Progress: 39.0% | Time: 629.8s
+Step  2000 | Train loss: 1.4046 | Val loss: 1.6156 | Time: 675.5s
+Step  2050 | Progress: 41.0% | Time: 687.8s
+Step  2100 | Progress: 42.0% | Time: 700.4s
+Step  2150 | Progress: 43.0% | Time: 712.9s
+Step  2200 | Progress: 44.0% | Time: 725.5s
+Step  2250 | Progress: 45.0% | Time: 738.1s
+Step  2300 | Progress: 46.0% | Time: 750.7s
+Step  2350 | Progress: 47.0% | Time: 763.2s
+Step  2400 | Progress: 48.0% | Time: 775.8s
+Step  2450 | Progress: 49.0% | Time: 788.4s
+Step  2500 | Train loss: 1.3262 | Val loss: 1.5550 | Time: 834.3s
+Step  2550 | Progress: 51.0% | Time: 846.6s
+Step  2600 | Progress: 52.0% | Time: 859.2s
+Step  2650 | Progress: 53.0% | Time: 871.8s
+Step  2700 | Progress: 54.0% | Time: 884.5s
+Step  2750 | Progress: 55.0% | Time: 897.0s
+Step  2800 | Progress: 56.0% | Time: 909.6s
+Step  2850 | Progress: 57.0% | Time: 922.2s
+Step  2900 | Progress: 58.0% | Time: 934.9s
+Step  2950 | Progress: 59.0% | Time: 947.5s
+Step  3000 | Train loss: 1.2664 | Val loss: 1.5145 | Time: 993.3s
+Step  3050 | Progress: 61.0% | Time: 1005.7s
+Step  3100 | Progress: 62.0% | Time: 1018.3s
+Step  3150 | Progress: 63.0% | Time: 1030.9s
+Step  3200 | Progress: 64.0% | Time: 1043.5s
+Step  3250 | Progress: 65.0% | Time: 1056.2s
+Step  3300 | Progress: 66.0% | Time: 1068.8s
+Step  3350 | Progress: 67.0% | Time: 1081.4s
+Step  3400 | Progress: 68.0% | Time: 1093.9s
+Step  3450 | Progress: 69.0% | Time: 1106.5s
+Step  3500 | Train loss: 1.2177 | Val loss: 1.5027 | Time: 1152.4s
+Step  3550 | Progress: 71.0% | Time: 1164.7s
+Step  3600 | Progress: 72.0% | Time: 1177.3s
+Step  3650 | Progress: 73.0% | Time: 1189.9s
+Step  3700 | Progress: 74.0% | Time: 1202.5s
+Step  3750 | Progress: 75.0% | Time: 1215.1s
+Step  3800 | Progress: 76.0% | Time: 1227.7s
+Step  3850 | Progress: 77.0% | Time: 1240.3s
+Step  3900 | Progress: 78.0% | Time: 1252.9s
+Step  3950 | Progress: 79.0% | Time: 1265.4s
+Step  4000 | Train loss: 1.1764 | Val loss: 1.4781 | Time: 1310.9s
+Step  4050 | Progress: 81.0% | Time: 1323.3s
+Step  4100 | Progress: 82.0% | Time: 1335.9s
+Step  4150 | Progress: 83.0% | Time: 1348.4s
+Step  4200 | Progress: 84.0% | Time: 1361.0s
+Step  4250 | Progress: 85.0% | Time: 1373.6s
+Step  4300 | Progress: 86.0% | Time: 1386.2s
+Step  4350 | Progress: 87.0% | Time: 1398.7s
+Step  4400 | Progress: 88.0% | Time: 1411.3s
+Step  4450 | Progress: 89.0% | Time: 1423.9s
+Step  4500 | Train loss: 1.1372 | Val loss: 1.4790 | Time: 1469.6s
+Step  4550 | Progress: 91.0% | Time: 1481.9s
+Step  4600 | Progress: 92.0% | Time: 1494.5s
+Step  4650 | Progress: 93.0% | Time: 1507.1s
+Step  4700 | Progress: 94.0% | Time: 1519.7s
+Step  4750 | Progress: 95.0% | Time: 1532.3s
+Step  4800 | Progress: 96.0% | Time: 1544.8s
+Step  4850 | Progress: 97.0% | Time: 1557.4s
+Step  4900 | Progress: 98.0% | Time: 1570.0s
+Step  4950 | Progress: 99.0% | Time: 1582.5s
+Step  4999 | Train loss: 1.0993 | Val loss: 1.4810 | Time: 1628.2s
+
+Training completed in 1628.22s
+Final train loss: 1.0987
+Final val loss: 1.4738
+Train accuracy: 65.80%
+Val accuracy: 58.20%
+Saved checkpoint to checkpoints/swish/trial_1.pt
+[INFO] Model initialized with 10,795,776 parameters
+
+============================================================
+Training Trial 2
+============================================================
+Starting Trial 2 - 5000 iterations
+Step     0 | Train loss: 4.2198 | Val loss: 4.2200 | Time: 33.5s
+Step    50 | Progress: 1.0% | Time: 45.9s
+Step   100 | Progress: 2.0% | Time: 58.4s
+Step   150 | Progress: 3.0% | Time: 70.9s
+Step   200 | Progress: 4.0% | Time: 83.5s
+Step   250 | Progress: 5.0% | Time: 96.1s
+Step   300 | Progress: 6.0% | Time: 108.6s
+Step   350 | Progress: 7.0% | Time: 121.2s
+Step   400 | Progress: 8.0% | Time: 133.8s
+Step   450 | Progress: 9.0% | Time: 146.3s
+Step   500 | Train loss: 1.9383 | Val loss: 2.0372 | Time: 191.8s
+Step   550 | Progress: 11.0% | Time: 204.1s
+Step   600 | Progress: 12.0% | Time: 216.7s
+Step   650 | Progress: 13.0% | Time: 229.2s
+Step   700 | Progress: 14.0% | Time: 241.8s
+Step   750 | Progress: 15.0% | Time: 254.4s
+Step   800 | Progress: 16.0% | Time: 266.9s
+Step   850 | Progress: 17.0% | Time: 279.4s
+Step   900 | Progress: 18.0% | Time: 292.0s
+Step   950 | Progress: 19.0% | Time: 304.6s
+Step  1000 | Train loss: 1.5573 | Val loss: 1.7506 | Time: 350.8s
+Step  1050 | Progress: 21.0% | Time: 363.1s
+Step  1100 | Progress: 22.0% | Time: 375.6s
+Step  1150 | Progress: 23.0% | Time: 388.1s
+Step  1200 | Progress: 24.0% | Time: 400.7s
+Step  1250 | Progress: 25.0% | Time: 413.2s
+Step  1300 | Progress: 26.0% | Time: 425.8s
+Step  1350 | Progress: 27.0% | Time: 438.3s
+Step  1400 | Progress: 28.0% | Time: 450.9s
+Step  1450 | Progress: 29.0% | Time: 463.4s
+Step  1500 | Train loss: 1.3907 | Val loss: 1.6079 | Time: 509.3s
+Step  1550 | Progress: 31.0% | Time: 521.7s
+Step  1600 | Progress: 32.0% | Time: 534.3s
+Step  1650 | Progress: 33.0% | Time: 546.8s
+Step  1700 | Progress: 34.0% | Time: 559.3s
+Step  1750 | Progress: 35.0% | Time: 571.9s
+Step  1800 | Progress: 36.0% | Time: 584.5s
+Step  1850 | Progress: 37.0% | Time: 597.1s
+Step  1900 | Progress: 38.0% | Time: 609.6s
+Step  1950 | Progress: 39.0% | Time: 622.2s
+Step  2000 | Train loss: 1.3010 | Val loss: 1.5356 | Time: 668.0s
+Step  2050 | Progress: 41.0% | Time: 680.4s
+Step  2100 | Progress: 42.0% | Time: 693.0s
+Step  2150 | Progress: 43.0% | Time: 705.5s
+Step  2200 | Progress: 44.0% | Time: 718.1s
+Step  2250 | Progress: 45.0% | Time: 730.6s
+Step  2300 | Progress: 46.0% | Time: 743.2s
+Step  2350 | Progress: 47.0% | Time: 755.8s
+Step  2400 | Progress: 48.0% | Time: 768.4s
+Step  2450 | Progress: 49.0% | Time: 781.0s
+Step  2500 | Train loss: 1.2326 | Val loss: 1.5112 | Time: 826.9s
+Step  2550 | Progress: 51.0% | Time: 839.2s
+Step  2600 | Progress: 52.0% | Time: 851.8s
+Step  2650 | Progress: 53.0% | Time: 864.3s
+Step  2700 | Progress: 54.0% | Time: 876.9s
+Step  2750 | Progress: 55.0% | Time: 889.5s
+Step  2800 | Progress: 56.0% | Time: 902.0s
+Step  2850 | Progress: 57.0% | Time: 914.5s
+Step  2900 | Progress: 58.0% | Time: 927.1s
+Step  2950 | Progress: 59.0% | Time: 939.6s
+Step  3000 | Train loss: 1.1807 | Val loss: 1.4968 | Time: 985.3s
+Step  3050 | Progress: 61.0% | Time: 997.6s
+Step  3100 | Progress: 62.0% | Time: 1010.1s
+Step  3150 | Progress: 63.0% | Time: 1022.7s
+Step  3200 | Progress: 64.0% | Time: 1035.3s
+Step  3250 | Progress: 65.0% | Time: 1047.9s
+Step  3300 | Progress: 66.0% | Time: 1060.4s
+Step  3350 | Progress: 67.0% | Time: 1073.0s
+Step  3400 | Progress: 68.0% | Time: 1085.6s
+Step  3450 | Progress: 69.0% | Time: 1098.1s
+Step  3500 | Train loss: 1.1333 | Val loss: 1.4825 | Time: 1144.6s
+Step  3550 | Progress: 71.0% | Time: 1156.9s
+Step  3600 | Progress: 72.0% | Time: 1169.5s
+Step  3650 | Progress: 73.0% | Time: 1182.0s
+Step  3700 | Progress: 74.0% | Time: 1194.6s
+Step  3750 | Progress: 75.0% | Time: 1207.2s
+Step  3800 | Progress: 76.0% | Time: 1219.7s
+Step  3850 | Progress: 77.0% | Time: 1232.3s
+Step  3900 | Progress: 78.0% | Time: 1244.8s
+Step  3950 | Progress: 79.0% | Time: 1257.4s
+Step  4000 | Train loss: 1.0841 | Val loss: 1.4887 | Time: 1302.7s
+Step  4050 | Progress: 81.0% | Time: 1315.0s
+Step  4100 | Progress: 82.0% | Time: 1327.6s
+Step  4150 | Progress: 83.0% | Time: 1340.1s
+Step  4200 | Progress: 84.0% | Time: 1352.7s
+Step  4250 | Progress: 85.0% | Time: 1365.2s
+Step  4300 | Progress: 86.0% | Time: 1377.8s
+Step  4350 | Progress: 87.0% | Time: 1390.3s
+Step  4400 | Progress: 88.0% | Time: 1402.8s
+Step  4450 | Progress: 89.0% | Time: 1415.4s
+Step  4500 | Train loss: 1.0321 | Val loss: 1.5021 | Time: 1461.1s
+Step  4550 | Progress: 91.0% | Time: 1473.5s
+Step  4600 | Progress: 92.0% | Time: 1486.1s
+Step  4650 | Progress: 93.0% | Time: 1498.6s
+Step  4700 | Progress: 94.0% | Time: 1511.2s
+Step  4750 | Progress: 95.0% | Time: 1523.7s
+Step  4800 | Progress: 96.0% | Time: 1536.2s
+Step  4850 | Progress: 97.0% | Time: 1548.8s
+Step  4900 | Progress: 98.0% | Time: 1561.4s
+Step  4950 | Progress: 99.0% | Time: 1574.0s
+Step  4999 | Train loss: 0.9869 | Val loss: 1.5156 | Time: 1620.0s
+
+Training completed in 1620.02s
+Final train loss: 0.9865
+Final val loss: 1.5198
+Train accuracy: 67.90%
+Val accuracy: 58.60%
+Saved checkpoint to checkpoints/swish/trial_2.pt
+[INFO] Model initialized with 10,795,776 parameters
+
+============================================================
+Training Trial 3
+============================================================
+Starting Trial 3 - 5000 iterations
+Step     0 | Train loss: 4.2487 | Val loss: 4.2449 | Time: 33.8s
+Step    50 | Progress: 1.0% | Time: 46.2s
+Step   100 | Progress: 2.0% | Time: 58.7s
+Step   150 | Progress: 3.0% | Time: 71.3s
+Step   200 | Progress: 4.0% | Time: 83.8s
+Step   250 | Progress: 5.0% | Time: 96.4s
+Step   300 | Progress: 6.0% | Time: 109.0s
+Step   350 | Progress: 7.0% | Time: 121.5s
+Step   400 | Progress: 8.0% | Time: 134.1s
+Step   450 | Progress: 9.0% | Time: 146.7s
+Step   500 | Train loss: 2.0382 | Val loss: 2.1107 | Time: 192.2s
+Step   550 | Progress: 11.0% | Time: 204.5s
+Step   600 | Progress: 12.0% | Time: 217.0s
+Step   650 | Progress: 13.0% | Time: 229.6s
+Step   700 | Progress: 14.0% | Time: 242.2s
+Step   750 | Progress: 15.0% | Time: 254.8s
+Step   800 | Progress: 16.0% | Time: 267.3s
+Step   850 | Progress: 17.0% | Time: 279.9s
+Step   900 | Progress: 18.0% | Time: 292.4s
+Step   950 | Progress: 19.0% | Time: 305.0s
+Step  1000 | Train loss: 1.5825 | Val loss: 1.7537 | Time: 351.3s
+Step  1050 | Progress: 21.0% | Time: 363.7s
+Step  1100 | Progress: 22.0% | Time: 376.2s
+Step  1150 | Progress: 23.0% | Time: 388.7s
+Step  1200 | Progress: 24.0% | Time: 401.3s
+Step  1250 | Progress: 25.0% | Time: 413.8s
+Step  1300 | Progress: 26.0% | Time: 426.3s
+Step  1350 | Progress: 27.0% | Time: 438.9s
+Step  1400 | Progress: 28.0% | Time: 451.4s
+Step  1450 | Progress: 29.0% | Time: 464.0s
+Step  1500 | Train loss: 1.4155 | Val loss: 1.6337 | Time: 510.0s
+Step  1550 | Progress: 31.0% | Time: 522.4s
+Step  1600 | Progress: 32.0% | Time: 534.9s
+Step  1650 | Progress: 33.0% | Time: 547.5s
+Step  1700 | Progress: 34.0% | Time: 560.0s
+Step  1750 | Progress: 35.0% | Time: 572.6s
+Step  1800 | Progress: 36.0% | Time: 585.2s
+Step  1850 | Progress: 37.0% | Time: 597.7s
+Step  1900 | Progress: 38.0% | Time: 610.3s
+Step  1950 | Progress: 39.0% | Time: 622.8s
+Step  2000 | Train loss: 1.3127 | Val loss: 1.5586 | Time: 669.0s
+Step  2050 | Progress: 41.0% | Time: 681.3s
+Step  2100 | Progress: 42.0% | Time: 693.9s
+Step  2150 | Progress: 43.0% | Time: 706.4s
+Step  2200 | Progress: 44.0% | Time: 718.9s
+Step  2250 | Progress: 45.0% | Time: 731.5s
+Step  2300 | Progress: 46.0% | Time: 744.0s
+Step  2350 | Progress: 47.0% | Time: 756.6s
+Step  2400 | Progress: 48.0% | Time: 769.1s
+Step  2450 | Progress: 49.0% | Time: 781.7s
+Step  2500 | Train loss: 1.2403 | Val loss: 1.5080 | Time: 827.2s
+Step  2550 | Progress: 51.0% | Time: 839.4s
+Step  2600 | Progress: 52.0% | Time: 852.0s
+Step  2650 | Progress: 53.0% | Time: 864.5s
+Step  2700 | Progress: 54.0% | Time: 877.1s
+Step  2750 | Progress: 55.0% | Time: 889.6s
+Step  2800 | Progress: 56.0% | Time: 902.1s
+Step  2850 | Progress: 57.0% | Time: 914.7s
+Step  2900 | Progress: 58.0% | Time: 927.3s
+Step  2950 | Progress: 59.0% | Time: 939.8s
+Step  3000 | Train loss: 1.1861 | Val loss: 1.4945 | Time: 985.7s
+Step  3050 | Progress: 61.0% | Time: 998.0s
+Step  3100 | Progress: 62.0% | Time: 1010.6s
+Step  3150 | Progress: 63.0% | Time: 1023.1s
+Step  3200 | Progress: 64.0% | Time: 1035.7s
+Step  3250 | Progress: 65.0% | Time: 1048.2s
+Step  3300 | Progress: 66.0% | Time: 1060.8s
+Step  3350 | Progress: 67.0% | Time: 1073.3s
+Step  3400 | Progress: 68.0% | Time: 1085.9s
+Step  3450 | Progress: 69.0% | Time: 1098.4s
+Step  3500 | Train loss: 1.1358 | Val loss: 1.4846 | Time: 1143.8s
+Step  3550 | Progress: 71.0% | Time: 1156.1s
+Step  3600 | Progress: 72.0% | Time: 1168.6s
+Step  3650 | Progress: 73.0% | Time: 1181.1s
+Step  3700 | Progress: 74.0% | Time: 1193.7s
+Step  3750 | Progress: 75.0% | Time: 1206.2s
+Step  3800 | Progress: 76.0% | Time: 1218.7s
+Step  3850 | Progress: 77.0% | Time: 1231.3s
+Step  3900 | Progress: 78.0% | Time: 1243.8s
+Step  3950 | Progress: 79.0% | Time: 1256.4s
+Step  4000 | Train loss: 1.0887 | Val loss: 1.4903 | Time: 1301.8s
+Step  4050 | Progress: 81.0% | Time: 1314.2s
+Step  4100 | Progress: 82.0% | Time: 1326.7s
+Step  4150 | Progress: 83.0% | Time: 1339.3s
+Step  4200 | Progress: 84.0% | Time: 1351.8s
+Step  4250 | Progress: 85.0% | Time: 1364.3s
+Step  4300 | Progress: 86.0% | Time: 1376.9s
+Step  4350 | Progress: 87.0% | Time: 1389.4s
+Step  4400 | Progress: 88.0% | Time: 1402.0s
+Step  4450 | Progress: 89.0% | Time: 1414.5s
+Step  4500 | Train loss: 1.0458 | Val loss: 1.4933 | Time: 1460.6s
+Step  4550 | Progress: 91.0% | Time: 1472.9s
+Step  4600 | Progress: 92.0% | Time: 1485.5s
+Step  4650 | Progress: 93.0% | Time: 1498.0s
+Step  4700 | Progress: 94.0% | Time: 1510.6s
+Step  4750 | Progress: 95.0% | Time: 1523.1s
+Step  4800 | Progress: 96.0% | Time: 1535.6s
+Step  4850 | Progress: 97.0% | Time: 1548.2s
+Step  4900 | Progress: 98.0% | Time: 1560.7s
+Step  4950 | Progress: 99.0% | Time: 1573.2s
+Step  4999 | Train loss: 0.9941 | Val loss: 1.4986 | Time: 1618.7s
+
+Training completed in 1618.78s
+Final train loss: 0.9966
+Final val loss: 1.4985
+Train accuracy: 69.50%
+Val accuracy: 59.50%
+Saved checkpoint to checkpoints/swish/trial_3.pt
+
+============================================================
+Calculating Reproducibility Metrics
+============================================================
+Comparing Model 1 vs Model 2...
+  Relative PD: 0.898708
+  Prediction differences: 937/1000
+Comparing Model 1 vs Model 3...
+  Relative PD: 0.887347
+  Prediction differences: 922/1000
+Comparing Model 2 vs Model 3...
+  Relative PD: 0.903547
+  Prediction differences: 936/1000
+
+============================================================
+Experiment Summary: charlm with swish
+============================================================
+Average val loss: 1.4974 ± 0.0188
+Average val accuracy: 58.77% ± 0.54%
+Average relative PD: 0.896534
+Average training time: 1622.3s
+Results saved to results/charlm-swish-20251208_174801.json
+📊 Saved training curves to plots/charlm_swish_cuda_training_curves.png
+📊 Saved reproducibility metrics to plots/charlm_swish_cuda_reproducibility.png
+📊 Saved summary metrics to plots/charlm_swish_cuda_summary.png
+✓ charlm/swish completed in 4989.7s
+  Val loss: 1.4974
+  Relative PD: 0.896534
+
+============================================================
+SUMMARY: charlm
+============================================================
+gelu         - Loss: 1.5540, PD: 0.905089
+relu         - Loss: 1.5555, PD: 0.906134
+swish        - Loss: 1.4974, PD: 0.896534
+
+============================================================
+ALL EXPERIMENTS COMPLETED
+============================================================
+Total time: 13868.9s (231.1 minutes)
+Models: 1
+Total experiments: 3
+
+============================================================
+ALL EXPERIMENTS COMPLETE!
+============================================================
+Device used: CUDA
+Total time: 13868.9s (231.1 min)
+
+Results saved to: results/all_experiments_summary.json
+Individual results: results/{model}-{activation}-{timestamp}.json
+Plots saved to: plots/*_gpu_*.png
+
+Run "python process_results.py" to generate comprehensive plots and summary!
