@@ -1,0 +1,1 @@
+watch -n 2 "sudo docker ps --format 'Container: {{.ID}} ({{.Status}})' && echo '' && sudo docker ps -q | xargs -I {} sudo docker exec {} nvidia-smi --query-gpu=utilization.gpu,memory.used,memory.total,temperature.gpu,power.draw --format=csv,noheader 2>/dev/null || echo 'No GPU info yet'"
