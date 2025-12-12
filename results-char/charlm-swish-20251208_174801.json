@@ -108,20 +108,20 @@
   "reproducibility_metrics": [
     {
       "model_pair": "1_vs_2",
-      "relative_pd": 0.8987078070640564,
-      "prediction_differences": 937,
+      "relative_pd": 0.8620450326800346,
+      "prediction_differences": 900,
       "total_predictions": 1000
     },
     {
       "model_pair": "1_vs_3",
-      "relative_pd": 0.8873470425605774,
-      "prediction_differences": 922,
+      "relative_pd": 0.8508320189476013,
+      "prediction_differences": 885,
       "total_predictions": 1000
     },
     {
       "model_pair": "2_vs_3",
-      "relative_pd": 0.9035465717315674,
-      "prediction_differences": 936,
+      "relative_pd": 0.8672017455101013,
+      "prediction_differences": 899,
       "total_predictions": 1000
     }
   ],
@@ -131,7 +131,7 @@
   "avg_train_accuracy": 67.73333333333333,
   "avg_val_accuracy": 58.76666666666666,
   "std_val_accuracy": 0.5436502143433384,
-  "avg_relative_pd": 0.8965338071187338,
+  "avg_relative_pd": 0.8600262657125791,
   "avg_training_time": 1622.3414611816406,
   "timestamp": "2025-12-08T17:48:01.704280"
 }
