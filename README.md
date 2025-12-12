@@ -13,6 +13,220 @@ This project investigates the relationship between activation functions and repr
 
 See `FINAL_CONCLUSIONS.md` for complete analysis.
 
+## Framework Design
+
+Our framework is built on three core principles: **modularity**, **reproducibility**, and **extensibility**. The design enables systematic comparison of activation functions across diverse neural architectures with minimal code duplication.
+
+### Architecture Overview
+
+```
+┌─────────────────────────────────────────────────────────────┐
+│                    Training Pipeline (train.py)             │
+│  ┌───────────┐  ┌──────────┐  ┌───────────┐  ┌──────────┐ │
+│  │ Load Data │→ │ Build    │→ │ Train     │→ │ Evaluate │ │
+│  │ (tokenize)│  │ Model    │  │ 3 Trials  │  │ Shamir PD│ │
+│  └───────────┘  └──────────┘  └───────────┘  └──────────┘ │
+└─────────────────────────────────────────────────────────────┘
+         ↓                ↓                          ↓
+┌────────────────┐  ┌─────────────────┐   ┌──────────────────┐
+│ Model Registry │  │ Activation Pool │   │ Results (JSON)   │
+│ (factories.py) │  │ (activations.py)│   │ • PD metrics     │
+│ • CharLM       │  │ • ReLU          │   │ • Loss/Accuracy  │
+│ • MiniGPT      │  │ • GELU          │   │ • Trial data     │
+│ • Nano         │  │ • Swish         │   │ • Timestamps     │
+│ • ConvLM       │  │ • SwiGLU        │   └──────────────────┘
+│ • HybridLM     │  │ • SmeLU         │            ↓
+│ • TinyLSTM     │  └─────────────────┘   ┌──────────────────┐
+└────────────────┘                         │ Analysis         │
+                                           │ (process_*.py)   │
+                                           │ • Cross-model    │
+                                           │ • Statistical    │
+                                           │ • Visualization  │
+                                           └──────────────────┘
+```
+
+### Design Principles
+
+**1. Factory Pattern for Models**
+- Each architecture implements a factory function in `model_factories.py`
+- Uniform interface: `factory(config, activation) → model`
+- Easy to add new architectures without modifying training code
+
+**2. Pluggable Activation Functions**
+- All activations in `activations.py` inherit from `nn.Module`
+- String-based activation selection: `'relu'`, `'gelu'`, `'swiglu'`, etc.
+- SwiGLU uses dimension-preserving design (splits internally)
+
+**3. Reproducibility-First Training**
+- 3 independent trials per configuration (different random seeds)
+- Shamir et al. (2021) prediction difference metric
+- Element-wise normalization: `2|p₁-p₂|/|p₁+p₂|` per token
+- Fixed evaluation sets for fair comparison
+
+**4. Decoupled Analysis**
+- Training produces standalone JSON files (timestamp-based)
+- Processing scripts aggregate results post-hoc
+- Incremental workflow: add new experiments without rerunning old ones
+
+**5. Hierarchical Configuration**
+- Base config in `config.py` (vocab, batch size, block size)
+- Model-specific overrides (layers, dimensions, activation)
+- CLI arguments override config for quick experiments
+
+### Key Components
+
+**Training Pipeline (`train.py`)**
+```python
+for trial in [1, 2, 3]:
+    set_seed(seed + trial)           # Reproducibility
+    model = factory(config, activation)  # Build model
+    train_single_trial(...)           # Train to convergence
+    preds = get_predictions(...)      # Evaluate on fixed set
+    
+# Calculate pairwise PD between trials
+avg_pd = mean([shamir_pd(p1, p2), shamir_pd(p1, p3), shamir_pd(p2, p3)])
+save_json(model, activation, avg_pd, trials)
+```
+
+**Model Factories (`model_factories.py`)**
+```python
+MODEL_REGISTRY = {
+    'charlm': charlm_factory,        # Small transformer
+    'minigpt': minigpt_factory,      # Large transformer  
+    'nanotransformer': nano_factory, # Tiny transformer
+    'convlm': convlm_factory,        # CNN-based
+    'hybridlm': hybrid_factory,      # CNN+Transformer
+    'tinylstm': lstm_factory,        # LSTM baseline
+}
+
+# Uniform interface
+def charlm_factory(config, activation):
+    return CharLM(
+        vocab_size=config.vocab_size,
+        n_embd=config.n_embd,
+        n_head=config.n_head,
+        n_layer=config.n_layer,
+        block_size=config.block_size,
+        activation=activation,  # Plug in any activation
+        dropout=config.dropout
+    )
+```
+
+**Activation Pool (`activations.py`)**
+```python
+# All inherit nn.Module for consistency
+class SmeLU(nn.Module):
+    def forward(self, x):
+        # Smooth ReLU with quadratic interpolation
+        ...
+
+class SwiGLU(nn.Module):
+    def forward(self, x):
+        # Splits input: gate = x[:, :d//2], value = x[:, d//2:]
+        # Returns: swish(gate) * value
+        ...
+
+# Models select by string
+activation = get_activation(activation_name)  # 'relu' → ReLU()
+```
+
+**Analysis Framework (`process_all_results.py`)**
+```python
+# Load all JSON files from results/
+results = defaultdict(lambda: defaultdict(dict))
+for json_file in Path('results').glob('*.json'):
+    model, activation = parse_filename(json_file)
+    results[model][activation] = load_json(json_file)
+
+# Cross-model comparison (excludes TinyLSTM - activation-invariant)
+models = [m for m in results.keys() if m != 'tinylstm']
+plot_cross_model_heatmap(models, activations)
+plot_sensitivity_cv(models, activations)
+
+# Individual model deep-dives (includes all 6 models)
+for model in results.keys():
+    plot_individual_comparison(model, results[model])
+```
+
+### Extensibility Points
+
+**Add New Model:**
+1. Create `model_newarch.py` with `NewArch` class
+2. Add `newarch_factory(config, activation)` to `model_factories.py`
+3. Register in `MODEL_REGISTRY`: `'newarch': newarch_factory`
+4. Run: `python train.py --model newarch --activation relu gelu swish swiglu smelu_1`
+
+**Add New Activation:**
+1. Implement `class NewActivation(nn.Module)` in `activations.py`
+2. Add to `get_activation()` mapping: `'newact': NewActivation()`
+3. Run: `python train.py --model charlm --activation newact`
+
+**Add New Metric:**
+1. Implement `calculate_new_metric(preds1, preds2)` in `train.py`
+2. Update `save_results()` to include new metric in JSON
+3. Modify `process_all_results.py` to visualize new metric
+
+### Data Flow Example
+
+```
+1. User runs: python train.py --model charlm --activation swiglu --trials 3 --max_iters 500
+
+2. Pipeline execution:
+   ├─ Load Shakespeare text → tokenize → split train/val (80/20)
+   ├─ Build CharLM with SwiGLU activation
+   ├─ Trial 1: seed=42, train 500 iters → val_loss=2.34, predictions₁
+   ├─ Trial 2: seed=43, train 500 iters → val_loss=2.31, predictions₂
+   ├─ Trial 3: seed=44, train 500 iters → val_loss=2.35, predictions₃
+   └─ Calculate Shamir PD:
+       • PD(1,2) = 0.5931
+       • PD(1,3) = 0.5945
+       • PD(2,3) = 0.5929
+       • avg_pd = 0.5935
+
+3. Save JSON: results/charlm-swiglu-20251212_140000.json
+   {
+     "model_name": "charlm",
+     "activation": "swiglu",
+     "avg_relative_pd": 0.5935,
+     "avg_val_loss": 2.33,
+     "avg_val_accuracy": 42.1,
+     "trials": [trial1_data, trial2_data, trial3_data],
+     "reproducibility_metrics": {"pd_1_2": 0.5931, "pd_1_3": 0.5945, "pd_2_3": 0.5929}
+   }
+
+4. Aggregate analysis: python process_all_results.py
+   ├─ Load all 30 JSON files (6 models × 5 activations)
+   ├─ Calculate CV% per model: CharLM CV=20.26% (HIGHLY SENSITIVE)
+   ├─ Identify best activation: SwiGLU (PD=0.5935 vs GELU=0.9051)
+   └─ Generate plots:
+       • Cross-model heatmap
+       • Individual model bars
+       • Sensitivity rankings
+```
+
+### Why This Design Works
+
+**Separation of Concerns:**
+- Training focuses on execution (train.py)
+- Models focus on architecture (model_*.py)
+- Activations focus on transformations (activations.py)
+- Analysis focuses on insights (process_*.py)
+
+**No Code Duplication:**
+- Single training loop handles all 6 models
+- Activation functions shared across architectures
+- Results processing works for any model/activation combo
+
+**Research-Friendly:**
+- Add new models in <50 lines of code
+- Compare activations without modifying training
+- JSON results enable offline analysis/plotting
+
+**Reproducible by Design:**
+- Fixed seeds per trial (42, 43, 44)
+- Timestamped results prevent overwrites
+- Statistical metrics (3 trials) reduce noise
+
 ## Quick Start
 
 Training a single model takes **5-10 minutes** on CPU (Apple M4 Pro).
