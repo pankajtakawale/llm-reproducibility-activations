@@ -65,12 +65,24 @@ class FeedForward(nn.Module):
     
     def __init__(self, n_embd, activation, dropout=0.1):
         super().__init__()
-        self.net = nn.Sequential(
-            nn.Linear(n_embd, 4 * n_embd),
-            activation,
-            nn.Linear(4 * n_embd, n_embd),
-            nn.Dropout(dropout)
-        )
+        # Check if using SwiGLU (needs doubled intermediate dimension)
+        from activations import SwiGLU
+        if isinstance(activation, SwiGLU):
+            # SwiGLU splits input in half, so we need 8x to get 4x effective
+            self.net = nn.Sequential(
+                nn.Linear(n_embd, 8 * n_embd),
+                activation,
+                nn.Linear(4 * n_embd, n_embd),
+                nn.Dropout(dropout)
+            )
+        else:
+            # Standard activation functions
+            self.net = nn.Sequential(
+                nn.Linear(n_embd, 4 * n_embd),
+                activation,
+                nn.Linear(4 * n_embd, n_embd),
+                nn.Dropout(dropout)
+            )
     
     def forward(self, x):
         return self.net(x)

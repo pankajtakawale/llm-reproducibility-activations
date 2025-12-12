@@ -77,12 +77,43 @@ class Swish(nn.Module):
         return "Swish()"
 
 
+class SwiGLU(nn.Module):
+    """
+    SwiGLU (Swish-Gated Linear Unit) activation function.
+    Used in LLaMA, PaLM, and other state-of-the-art LLMs.
+    
+    SwiGLU(x) = Swish(xW) ⊗ xV
+    where W and V are learned projections and ⊗ is element-wise product.
+    
+    For single-layer usage (like in our experiments), we split the input
+    and apply: SwiGLU(x) = Swish(x_gate) * x_value
+    
+    Reference: "GLU Variants Improve Transformer" (Shazeer, 2020)
+    """
+    
+    def __init__(self):
+        super(SwiGLU, self).__init__()
+        self.swish = Swish()
+    
+    def forward(self, x):
+        """
+        Apply SwiGLU activation.
+        Expects input dimension to be even (will be split in half).
+        """
+        # Split input into two halves for gating
+        x_gate, x_value = x.chunk(2, dim=-1)
+        return self.swish(x_gate) * x_value
+    
+    def __repr__(self):
+        return "SwiGLU()"
+
+
 def get_activation(name):
     """
     Get activation function by name.
     
     Args:
-        name: One of 'smelu_05', 'smelu_1', 'relu', 'gelu', 'swish'
+        name: One of 'smelu_05', 'smelu_1', 'relu', 'gelu', 'swish', 'swiglu'
     
     Returns:
         Activation module
@@ -92,7 +123,8 @@ def get_activation(name):
         'smelu_1': SmeLU(beta=1.0),
         'relu': nn.ReLU(),
         'gelu': nn.GELU(),
-        'swish': Swish()
+        'swish': Swish(),
+        'swiglu': SwiGLU()
     }
     
     if name not in activations:
