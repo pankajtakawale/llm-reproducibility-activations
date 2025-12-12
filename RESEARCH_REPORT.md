@@ -412,62 +412,173 @@ More reproducible models may be easier to:
 
 ## 7. Future Work
 
-### 7.1 Scaling Experiments
+Based on our comprehensive experiments across 5 architectures (CharLM, MiniGPT, NanoTransformer, HybridLM, ConvLM) testing multiple activation functions, we propose the following high-impact research directions:
 
-**GPU Cluster Deployment:**
-- Run full-scale model (10.8M params, 6 layers, 384 hidden)
-- Increase training iterations to 5000
-- Increase trials to 10+ per activation
-- Test with larger context window (512-1024 tokens)
+### 7.1 Architecture Sensitivity Prediction Framework ⭐ **HIGHEST PRIORITY**
 
-**Expected Timeline:** ~10 minutes on Nvidia DGX A100
+**Motivation:** 80% of architectures tested (4 of 5) showed activation insensitivity, wasting 66-75% of computational resources on redundant experiments.
 
-### 7.2 Extended Experimental Design
+**Proposed Solution:**
+- Develop a lightweight diagnostic test (100-500 iterations, ~5-10 minutes)
+- Predict whether an architecture will be activation-sensitive before running full experiments
+- Create a decision tree: if insensitive → use default ReLU, if sensitive → run full ablation
 
-**Additional Activations:**
-- Mish, ELU, SELU, LeakyReLU
-- Learnable activation functions (PReLU, APL)
-- Adaptive activation functions
+**Expected Impact:**
+- Save 66-75% of GPU time ($400-800 per model in cloud costs)
+- Enable rapid activation sensitivity assessment for new architectures
+- Provide practical guidelines for practitioners
 
-**Additional Datasets:**
-- WikiText-103 (larger corpus)
-- Code (Python, JavaScript)
-- Multiple languages (non-English text)
+**Validation Plan:**
+- Test on 10+ diverse architectures across domains
+- Correlate early-stage metrics (gradient variance, loss landscape curvature) with full-scale sensitivity
+- Develop threshold criteria for sensitivity classification
 
-**Additional Model Architectures:**
-- GPT-2 (124M-1.5B params)
-- Nano-GPT variants
-- Baby-GPT
+### 7.2 Understanding CharLM's Unique Sensitivity
 
-### 7.3 Enhanced Reproducibility Analysis
-
-**Statistical Validation:**
-- Bootstrap confidence intervals
-- Permutation tests for significance
-- Effect size calculations (Cohen's d)
-
-**Distributional Analysis:**
-- Measure KL divergence between trial outputs
-- Analyze prediction entropy across trials
-- Study correlation of loss landscapes
-
-**Temporal Analysis:**
-- Track reproducibility over training (early vs. late training)
-- Study convergence trajectory similarity
-- Analyze checkpoint-level reproducibility
-
-### 7.4 Theoretical Investigation
+**Key Finding:** CharLM is the ONLY architecture (1 of 5) showing significant activation sensitivity at full scale (5.36% variance, p=0.024).
 
 **Research Questions:**
-- Why does SmeLU β=1.0 show high loss variance but low prediction variance?
-- What loss landscape properties correlate with reproducibility?
-- Can we derive theoretical bounds on reproducibility given activation properties?
+- What architectural properties cause activation sensitivity?
+- Why are simple recurrent structures more sensitive than attention-based models?
+- Is there a complexity threshold beyond which activations don't matter?
 
-**Proposed Methods:**
-- Loss landscape visualization
-- Gradient flow analysis
-- Hessian eigenvalue analysis
-- Mode connectivity studies
+**Proposed Experiments:**
+- Test intermediate architectures (LSTM with attention, shallow transformers, hybrid models)
+- Systematically ablate architectural components to isolate sensitivity factors
+- Compare simple vs. complex attention mechanisms (single-head vs. multi-head)
+- Test pure RNN/LSTM/GRU variants to validate recurrence hypothesis
+
+**Expected Insights:**
+- Taxonomy of sensitivity-prone vs. sensitivity-immune architectures
+- Design principles for activation-agnostic models
+- Understanding of when activation choice matters
+
+### 7.3 Scale-Dependent Sensitivity Analysis
+
+**Observation:** CharLM variance dropped from 8.2% (partial scale) to 5.36% (full scale 10.8M params).
+
+**Hypothesis:** Activation sensitivity decreases with model size.
+
+**Experimental Design:**
+- Train CharLM at: 1M, 2M, 5M, 10M, 20M, 50M, 100M parameters
+- Train MiniGPT at similar scales to confirm insensitivity persists
+- Test at each scale: 3 activations × 3 trials = 9 runs per scale
+
+**Research Questions:**
+- Does sensitivity monotonically decrease with scale?
+- Is there a critical size where sensitivity vanishes?
+- Do insensitive architectures remain insensitive at all scales?
+
+**Expected Timeline:** ~40 GPU hours for full sweep
+
+### 7.4 Modern Activation Functions
+
+**Limitation:** Tested ReLU, GELU, Swish, SmeLU-1.0 but missed state-of-the-art activations.
+
+**Proposed Extensions:**
+- Test SwiGLU, GeGLU, ReGLU (used in LLaMA, GPT-4, PaLM)
+- Test Mish, ELU, SELU for comprehensive coverage
+- Test learnable activations (PReLU, APL)
+
+**Key Question:** Does SmeLU-1.0's 0% benefit for MiniGPT generalize to modern activations?
+
+**Validation:**
+- If MiniGPT remains insensitive → activations truly don't matter for GPT architectures
+- If SwiGLU breaks insensitivity → gated activations may be special
+
+### 7.5 Reproducibility vs. Performance Trade-off Study
+
+**Observation:** CharLM Swish has BOTH best reproducibility (0.8600 PD) AND best performance (1.4974 loss).
+
+**Research Questions:**
+- Does this correlation hold generally, or is it CharLM-specific?
+- Are there cases where best-performing activation has worst reproducibility?
+- Can we quantify the Pareto frontier of performance vs. reproducibility?
+
+**Proposed Analysis:**
+- Plot reproducibility vs. performance for all 48 experiments
+- Identify architectures with positive vs. negative correlations
+- Develop multi-objective optimization criteria
+
+### 7.6 Cross-Domain Validation
+
+**Limitation:** Tested only character-level language modeling.
+
+**Proposed Domains:**
+- **Vision:** CNNs on CIFAR-10/ImageNet, ViT on image classification
+- **Audio:** WaveNet on speech synthesis, Whisper on ASR
+- **Reinforcement Learning:** Policy networks (PPO, SAC), value networks
+- **Time-Series:** Transformers on weather/stock prediction
+- **Graph Neural Networks:** GCN, GAT on molecular property prediction
+
+**Key Question:** Is activation insensitivity universal or domain-specific?
+
+**Expected Outcome:**
+- Domain taxonomy: activation-sensitive vs. activation-agnostic tasks
+- Understanding of when architecture vs. activation dominates
+- Practical guidelines by application area
+
+### 7.7 Theoretical Framework Development
+
+**Fundamental Question:** Why are 80% of architectures activation-insensitive?
+
+**Proposed Investigations:**
+- **Loss Landscape Analysis:** Measure smoothness, local minima density, barrier heights
+- **Gradient Flow Theory:** Analyze how activations affect gradient propagation at scale
+- **Information Bottleneck:** Study whether activation choice affects information flow
+- **Universal Approximation:** Prove conditions under which activations are equivalent
+
+**Methods:**
+- Hessian eigenvalue analysis at convergence
+- Mode connectivity experiments between activation variants
+- Neural Tangent Kernel (NTK) comparisons
+- Theoretical derivations with simplifying assumptions
+
+**Goal:** Mathematical model predicting sensitivity from architecture properties (depth, width, attention, normalization).
+
+### 7.8 Practical Guidelines and Tools
+
+**Deliverables:**
+- **Activation Selection Flowchart:** Decision tree for practitioners
+- **Architecture Taxonomy:** "Activation matters" vs. "activation doesn't matter" categorization
+- **Cost Calculator:** Estimate GPU savings from skipping unnecessary ablations
+- **Quick Sensitivity Test:** Open-source tool for 5-minute sensitivity assessment
+
+**Target Audience:**
+- ML engineers designing new architectures
+- Researchers conducting ablation studies
+- Cloud computing budget planners
+
+**Expected Impact:**
+- Reduce wasted computation in ML community
+- Save millions in aggregate cloud costs
+- Accelerate architecture design cycles
+
+---
+
+### Recommended Research Roadmap
+
+**Phase 1 (3 months):** Architecture Sensitivity Prediction Framework (#7.1)
+- Immediate practical value
+- Validates on existing 5 architectures
+- Deployable tool for community
+
+**Phase 2 (6 months):** CharLM Sensitivity Investigation (#7.2) + Scale Analysis (#7.3)
+- Fundamental understanding of sensitivity causes
+- Tests hypothesis about architecture complexity
+- Informs theory development
+
+**Phase 3 (6 months):** Cross-Domain Validation (#7.6) + Modern Activations (#7.4)
+- Establishes generality of findings
+- Tests state-of-the-art activation functions
+- Expands applicability
+
+**Phase 4 (12 months):** Theoretical Framework (#7.7)
+- Mathematical foundations
+- Predictive models
+- Publication-ready theory
+
+**Total Timeline:** 2 years, ~$10K-20K compute budget
 
 ---
 
