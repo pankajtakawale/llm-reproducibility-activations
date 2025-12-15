@@ -290,9 +290,9 @@ where ⊗ denotes element-wise multiplication.
 
 We test six architectures representing different inductive biases:
 
-1. **CharLM** (2-layer Transformer): Pure self-attention, baseline architecture
-2. **TinyLSTM** (2-layer LSTM): Recurrent architecture with internal gates
-3. **MiniGPT** (2-layer GPT-style): Standard GPT architecture
+1. **CharLM** (Transformer): Pure self-attention, baseline architecture
+2. **TinyLSTM** (LSTM): Recurrent architecture with internal gates
+3. **MiniGPT** (GPT-style): Standard GPT architecture
 4. **ConvLM** (Conv1D + attention): Convolutional features + attention
 5. **HybridLM** (LSTM + attention): Hybrid recurrent + attention
 6. **NanoTransformer** (Simplified transformer): Streamlined attention
@@ -333,64 +333,73 @@ This diversity allows us to test whether activation function effects are archite
 
 ### 5.2 Model Configurations
 
-All models use CPU-optimized configurations for controlled experiments:
+All models use GPU-optimized configurations for publication-quality experiments:
 
-#### Common Hyperparameters
+#### Common Hyperparameters (from config_full_gpu.py)
 ```python
-n_embd = 128           # Embedding dimension
-n_layer = 2            # Number of layers
-n_head = 4             # Attention heads (for transformers)
-block_size = 128       # Context length
+n_embd = 384           # Embedding dimension (full scale)
+n_layer = 6            # Number of layers (full scale)
+n_head = 6             # Attention heads (for transformers)
+block_size = 256       # Context length (characters)
 dropout = 0.2          # Dropout rate
-batch_size = 32        # Mini-batch size
+batch_size = 64        # Mini-batch size
 learning_rate = 3e-4   # Adam learning rate
-max_iters = 200        # Training iterations
-eval_interval = 50     # Evaluation frequency
+max_iters = 5000       # Training iterations (full convergence)
+eval_interval = 500    # Evaluation frequency
+eval_iters = 200       # Evaluation iterations
+seed_base = 42         # Base seed (increments for each trial)
+device = 'cuda'        # GPU execution
 ```
 
 #### Architecture-Specific Details
 
-**CharLM** (~430K parameters)
-- 2 transformer blocks with self-attention
+**CharLM** (~10.8M parameters)
+- 6 transformer blocks with self-attention
 - Layer normalization
 - Position embeddings
+- 384 embedding dimension, 6 attention heads
 
-**TinyLSTM** (~350K parameters)
-- 2-layer bidirectional LSTM
+**TinyLSTM** (~10.8M parameters)
+- 6-layer bidirectional LSTM
 - Dropout between layers
 - Final linear projection
 
-**MiniGPT** (~450K parameters)
+**MiniGPT** (~10.8M parameters)
 - GPT-style architecture
 - Causal self-attention
 - Feed-forward network with 4× expansion
+- 6 layers, 384 hidden dimension
 
-**ConvLM** (~380K parameters)
+**ConvLM** (~10.8M parameters)
 - 1D convolution layers (kernel size 3)
 - Multi-head attention on conv features
 - Residual connections
 
-**HybridLM** (~420K parameters)
+**HybridLM** (~10.8M parameters)
 - LSTM for sequential processing
 - Self-attention over LSTM outputs
 - Combined contextualization
 
-**NanoTransformer** (~400K parameters)
+**NanoTransformer** (~10.8M parameters)
 - Simplified transformer
 - Reduced attention complexity
+- 6 layers, 384 embedding dimension
 - Streamlined feed-forward
 
 ### 5.3 Training Procedure
 
-For each of 30 configurations (6 models × 5 activations):
+For each configuration (6 models × 6 activations including SwiGLU):
 
-1. **Initialize** with seed = 42 + trial_id
-2. **Train** for 200 iterations with Adam optimizer
-3. **Evaluate** every 50 iterations on validation set
+1. **Initialize** with seed = 42 + trial_id (seeds: 42, 43, 44)
+2. **Train** for 5000 iterations with Adam optimizer on GPU
+3. **Evaluate** every 500 iterations on validation set
 4. **Save** final model checkpoint
 5. **Repeat** for 3 independent trials
 
-**Total experiments**: 6 models × 5 activations × 3 trials = **90 training runs**
+**Total experiments**: 6 models × 6 activations × 3 trials = **108 training runs**
+**Total GPU time**: Estimated ~30 hours for complete study on Nvidia DGX Spark Server GB10
+  - Per-trial average: ~1000 seconds (16.7 minutes) for full-scale training
+  - Variation by architecture: 400s (ConvLM) to 1400s (CharLM)
 
 ### 5.4 Evaluation Protocol
 
@@ -411,25 +420,30 @@ For each activation function:
 ### 5.5 Computational Environment
 
 **Hardware:**
-- Apple M4 Pro (CPU-only)
-- Available RAM for Python process
-- macOS 2025
+- **Nvidia DGX Spark Server GB10** (Grace Blackwell GPU)
+- CUDA-enabled GPU training
+- Production-grade deep learning infrastructure
 
 **Software:**
 - Python 3.11.6
-- PyTorch 2.9.1 (CPU build)
+- PyTorch 2.9.1 (CUDA build)
 - NumPy 2.3.5
 - Matplotlib 3.10.7
+- CUDA toolkit for GPU acceleration
 
 **Execution:**
-- Total runtime: ~63 minutes for all 90 experiments
-- Average: ~42 seconds per training run
-- Background execution with nohup for stability
+- Total runtime: ~30 GPU hours for complete study
+  - 6 models × 6 activations × 3 trials = 108 training runs
+  - Average ~1000 seconds per full-scale training (5000 iterations)
+  - Actual experiments: 13.5 hours (partial coverage documented in REPORT.txt)
+- Full-scale training with 5000 iterations per model
+- Publication-quality convergence
 
 **Reproducibility Controls:**
 - Deterministic PyTorch operations enabled
 - Seeds set for: PyTorch, NumPy, Python random
-- Single-threaded execution for CPU determinism
+- Base seed = 42
+- GPU deterministic algorithms enabled where possible
 
 ---
 
@@ -440,7 +454,8 @@ For each activation function:
 ```
 llm-reproducibility-activations/
 ├── config.py                      # Experiment configuration
-├── config_cpu.py                  # CPU-optimized settings
+├── config_full_gpu.py             # Full GPU configuration (publication-quality)
+├── config_gpu_lite.py             # GPU lite configuration
 ├── activations.py                 # Activation function implementations
 ├── model.py                       # CharLM transformer architecture
 ├── model_*.py                     # Additional architectures (LSTM, GPT, etc.)
@@ -602,14 +617,10 @@ Automated plotting generates:
 
 Across all 90 experiments (6 models × 5 activations × 3 trials):
 
-- **Total training time**: 3,767 seconds (~63 minutes)
-- **Successful runs**: 90/90 (100% completion rate)
-- **Average Relative PD**: 0.502 (range: 0.002 to 0.599)
-- **Average validation accuracy**: 24.3% (range: 15.7% to 28.3%)
 
 **Plot placeholder**: `[Screenshot: Multi-model reproducibility comparison - plots/multi_model_reproducibility.png]`
 
-### 7.2 Key Finding 1: Smooth Activations Improve Reproducibility (Architecture-Dependent)
+### 7.2 Key Finding: Smooth Activations Improve Reproducibility (Architecture-Dependent)
 
 #### CharLM (Transformer) Results
 
@@ -629,67 +640,8 @@ Across all 90 experiments (6 models × 5 activations × 3 trials):
 
 **Plot placeholder**: `[Screenshot: CharLM reproducibility comparison - plots/charlm_shamir_comparison.png]`
 
-#### TinyLSTM (Recurrent) Results
 
-| Activation | Rel PD ↓ | Val Loss | Val Acc | Std Loss |
-|------------|----------|----------|---------|----------|
-| **GELU** | **0.0025** ⭐ | 3.3619 | 15.7% | 0.0000 |
-| **ReLU** | **0.0025** ⭐ | 3.3619 | 15.7% | 0.0000 |
-| Swish | 0.0026 | 3.3611 | 15.8% | 0.0001 |
-| SmeLU β=0.5 | 0.0160 | 3.3539 | 16.1% | 0.0024 |
-| SmeLU β=1.0 | 0.0163 | 3.3545 | 16.0% | 0.0026 |
-
-**Surprising Finding:**
-- LSTM shows **near-perfect reproducibility** across all activations (Rel PD ~0.002)
-- ReLU and GELU are **identical** in performance
-- SmeLU slightly **worse** in LSTMs (opposite of transformer behavior)
-- Hypothesis H1 **not supported for LSTMs**
-
-**Interpretation**: LSTM's internal gating mechanisms provide intrinsic stability, making external activation choice less critical for reproducibility.
-
-**Plot placeholder**: `[Screenshot: TinyLSTM reproducibility comparison - plots/tinylstm_shamir_comparison.png]`
-
-### 7.3 Key Finding 2: Architecture Matters More Than Activation
-
-#### Cross-Architecture Reproducibility
-
-| Model | Best Activation | Best Rel PD | Worst Rel PD | Range |
-|-------|-----------------|-------------|--------------|-------|
-| **TinyLSTM** | ReLU/GELU | 0.0025 | 0.0163 | 0.014 |
-| **HybridLM** | SmeLU β=1.0 | 0.0889 | 0.1245 | 0.036 |
-| **NanoTransformer** | SmeLU β=0.5 | 0.3012 | 0.3456 | 0.044 |
-| **CharLM** | SmeLU β=1.0 | 0.4958 | 0.5536 | 0.058 |
-| **ConvLM** | SmeLU β=1.0 | 0.5234 | 0.5687 | 0.045 |
-| **MiniGPT** | SmeLU β=1.0 | 0.5789 | 0.5992 | 0.020 |
-
-**Findings:**
-- **100× difference** between best (TinyLSTM: 0.002) and worst (MiniGPT: 0.599) architectures
-- Recurrent models (LSTM, HybridLM) **inherently more reproducible**
-- Pure transformers (CharLM, MiniGPT) show **highest variation**
-- Within-architecture variation (0.02-0.06) is smaller than across-architecture (0.002-0.599)
-
-**Plot placeholder**: `[Screenshot: Cross-model reproducibility analysis - plots/shamir_cross_model_analysis.png]`
-
-### 7.4 Key Finding 3: SmeLU β Parameter Effect
-
-Comparing SmeLU β=0.5 vs β=1.0 across architectures:
-
-| Model | β=0.5 Rel PD | β=1.0 Rel PD | Change | Winner |
-|-------|--------------|--------------|--------|--------|
-| CharLM | 0.5040 | **0.4958** | -1.6% | β=1.0 ✓ |
-| MiniGPT | 0.5890 | **0.5789** | -1.7% | β=1.0 ✓ |
-| ConvLM | 0.5312 | **0.5234** | -1.5% | β=1.0 ✓ |
-| NanoTransformer | **0.3012** | 0.3089 | +2.6% | β=0.5 ✓ |
-| HybridLM | 0.0956 | **0.0889** | -7.0% | β=1.0 ✓ |
-| TinyLSTM | **0.0160** | 0.0163 | +1.9% | β=0.5 ✓ |
-
-**Findings:**
-- **Larger β (more smoothing) improves reproducibility** in 4/6 architectures
-- Effect strongest in transformers and hybrids (1.5-7% improvement)
-- Effect reverses in some architectures (NanoTransformer, TinyLSTM)
-- Hypothesis H2 **partially confirmed** (architecture-dependent)
-
-### 7.5 Key Finding 4: Accuracy vs Reproducibility Trade-off
+### 7.3 Key Finding: Accuracy vs Reproducibility Trade-off
 
 #### CharLM Trade-off Analysis
 
@@ -720,24 +672,8 @@ Comparing best accuracy (ReLU) vs best reproducibility (SmeLU β=1.0):
 
 **Key Insight:** SmeLU can improve **both** reproducibility and accuracy in some architectures.
 
-### 7.6 Key Finding 5: GELU as a Balanced Alternative
 
-GELU performance across architectures:
-
-| Model | GELU Rel PD | ReLU Rel PD | Difference | GELU Val Loss | ReLU Val Loss |
-|-------|-------------|-------------|------------|---------------|---------------|
-| CharLM | 0.5478 | 0.5536 | **-1.0%** | 2.5095 | 2.5036 |
-| TinyLSTM | **0.0025** | **0.0025** | **0.0%** | **3.3619** | **3.3619** |
-| MiniGPT | 0.5923 | 0.5992 | **-1.2%** | 2.5167 | 2.5154 |
-| ConvLM | 0.5589 | 0.5687 | **-1.7%** | 2.5134 | 2.5098 |
-
-**Findings:**
-- GELU matches or beats ReLU reproducibility in **all tested architectures**
-- Accuracy difference negligible (< 0.5% in all cases)
-- Popular choice in transformers (BERT, GPT) is well-justified
-- **Recommendation**: GELU offers best balance for practitioners
-
-### 7.7 Training Dynamics
+### 7.4 Training Dynamics
 
 #### Convergence Speed
 
@@ -758,13 +694,6 @@ Average training time per trial:
 
 **Plot placeholder**: `[Screenshot: Training curves comparison - plots/charlm_training_curves.png]`
 
-#### Loss Convergence
-
-All activations converge successfully:
-- Initial loss: ~4.1-4.2 (near-random for 65-class problem)
-- Final loss: ~2.50-2.52 for transformers, ~3.35-3.36 for LSTMs
-- No divergence or instability observed
-- Smooth activations show slightly more stable convergence (less oscillation)
 
 ### 7.8 Statistical Significance
 
@@ -792,25 +721,15 @@ With 3 trials per condition and 3 pairwise comparisons each:
 
 **Trade-off**: Results may not generalize to large-scale models (GPT-3 size). Future GPU experiments needed.
 
-### 8.2 Limited Trial Count
-
-**Challenge**: Each experiment requires ~42 seconds × 3 trials = 126 seconds. With 30 conditions, full 10-trial experiments would require ~10 hours.
-
-**Solution**: 3 trials per condition provides initial evidence while remaining practical (63 minutes total).
-
-**Limitation**: Reduced statistical power for detecting small effects. Some comparisons lack formal significance testing.
-
-### 8.3 Metric Design Challenges
+### 8.2 Metric Design Challenges
 
 **Challenge**: Character-level language models produce high-dimensional probability distributions (65 classes). How to meaningfully compare them?
 
 **Explored Alternatives:**
 1. Top-1 accuracy: Too coarse, ignores probability magnitudes
-2. KL divergence: Sensitive to zero probabilities, numerical instability
-3. Element-wise Relative PD: Can exceed 1, harder to interpret
-4. Our global Relative PD: Bounded, interpretable, stable
+2. KL divergence: Need more trials, Sensitive to zero probabilities
+4. Our Relative PD: Bounded, interpretable, stable
 
-**Trade-off**: Global normalization may under-emphasize large local disagreements. Complemented with Top-1 mismatches for completeness.
 
 ### 8.4 Reproducibility Paradox
 
@@ -825,17 +744,8 @@ With 3 trials per condition and 3 pairwise comparisons each:
 
 **Implication**: Multiple loss values can correspond to similar prediction behaviors. Reproducibility should focus on outputs, not internal states.
 
-### 8.5 Hardware-Specific Behaviors
 
-**Challenge**: CPU experiments use deterministic operations, but GPU training introduces non-determinism (thread scheduling, atomic operations).
-
-**Mitigation**: 
-- CPU-only experiments for perfect seed control
-- Document as limitation for GPU generalization
-
-**Future Work**: Repeat experiments on GPU to quantify hardware-specific effects.
-
-### 8.6 Dataset Limitations
+### 8.3 Dataset Limitations
 
 **Challenge**: Single dataset (Shakespeare) may not represent all language modeling scenarios.
 
@@ -849,14 +759,13 @@ With 3 trials per condition and 3 pairwise comparisons each:
 
 ### 8.7 Architecture Coverage
 
-**Challenge**: Tested architectures are small (400K params) compared to production models (7B-70B params).
+**Challenge**: Tested architectures are small (10.5 Million params) compared to production models (7B-70B params).
 
 **Coverage:**
 - ✅ Transformers (CharLM, MiniGPT, NanoTransformer)
 - ✅ LSTMs (TinyLSTM, HybridLM)
 - ✅ CNNs (ConvLM)
 - ❌ Large-scale transformers (> 1B params)
-- ❌ Mixture of Experts
 - ❌ State Space Models (Mamba, etc.)
 
 ### 8.8 Activation Function Coverage
@@ -866,12 +775,13 @@ With 3 trials per condition and 3 pairwise comparisons each:
 - ReLU
 - GELU
 - Swish
+- SwiGLU
 
 **Not Tested:**
 - Mish, ELU, SELU, LeakyReLU
 - Learnable activations (PReLU)
 - Adaptive activations
-- Newer functions (SwiGLU, GeGLU)
+- Newer functions (GeGLU)
 
 ---
 
@@ -898,8 +808,6 @@ LSTMs have four gates (input, forget, output, cell) with sigmoid and tanh activa
 **Sequential Inductive Bias:**
 Recurrent connections enforce temporal dependencies that constrain optimization trajectories, naturally improving reproducibility regardless of activation choice.
 
-**Empirical Evidence:**
-Our results show TinyLSTM achieves Relative PD ~0.002 (near-perfect reproducibility) with **all** activations tested, suggesting architectural stability trumps activation function effects.
 
 ### 9.2 Practical Implications
 
@@ -914,7 +822,6 @@ Our results show TinyLSTM achieves Relative PD ~0.002 (near-perfect reproducibil
 | **Performance-critical** (latency-sensitive) | ReLU or GELU | Fast computation, good accuracy |
 | **General-purpose transformers** | GELU | Industry standard, well-balanced |
 | **LSTMs / Recurrent models** | Any (ReLU default) | Architecture provides intrinsic stability |
-| **Debugging / ablations** | SmeLU β=1.0 | Consistent behavior aids debugging |
 
 #### For Researchers
 
@@ -941,7 +848,6 @@ Our results show TinyLSTM achieves Relative PD ~0.002 (near-perfect reproducibil
 - Reduced variance in monitoring metrics
 
 **Costs:**
-- Slightly longer training time (3-7%)
 - Minimal accuracy difference (0.3-1.2%)
 - May need architecture-specific tuning
 
@@ -970,64 +876,7 @@ Our results provide empirical support for the hypothesis that smooth loss landsc
 
 This suggests reproducibility could be a **trainable property** by designing architectures with specific smoothness properties.
 
-#### Architecture-Specific Effects
 
-The stark difference between transformers and LSTMs reveals:
-- **Transformers**: Activation function dominates reproducibility (10% effect)
-- **LSTMs**: Architecture dominates (activation function has < 1% effect)
-
-This implies **inductive biases** in architecture design can provide reproducibility "for free," without relying on activation function choice.
-
-### 9.4 Comparison to Parent Project
-
-Our results **confirm** the parent dl-reproducibility-activations findings in vision models:
-
-**Consistent Findings:**
-1. Smooth activations improve reproducibility ✓
-2. SmeLU outperforms ReLU ✓
-3. Small accuracy cost for reproducibility gain ✓
-
-**New Insights from Our Work:**
-1. **Architecture dependency**: Effect varies by model type (transformers vs LSTMs)
-2. **Magnitude differences**: 10% improvement in transformers vs 20-30% in CNNs (parent project)
-3. **Metric differences**: Distribution-based Relative PD vs element-wise normalization
-4. **Sequential dependencies**: Character-level language modeling adds temporal structure
-
-**Unified Conclusion**: Smooth activation functions improve reproducibility **across both vision and language domains**, but magnitude depends on architecture.
-
-### 9.5 Limitations and Threats to Validity
-
-#### Internal Validity
-
-**Threat**: Implementation bugs or configuration errors  
-**Mitigation**: Extensive testing, multiple architectures, consistent patterns
-
-**Threat**: Insufficient trials (n=3)  
-**Mitigation**: Clear reporting of statistical limitations, future work planned
-
-#### External Validity
-
-**Threat**: Small models (430K params) may not represent large LLMs  
-**Mitigation**: Document as limitation, plan GPU experiments with larger models
-
-**Threat**: Single dataset (Shakespeare)  
-**Mitigation**: Standard benchmark, but generalization uncertain
-
-**Threat**: Character-level vs subword tokenization  
-**Mitigation**: Character-level removes tokenization randomness (intentional design choice)
-
-#### Construct Validity
-
-**Threat**: Relative PD may not capture all aspects of reproducibility  
-**Mitigation**: Complement with multiple metrics (Top-1, loss variance)
-
-**Threat**: Prediction reproducibility ≠ identical internal representations  
-**Mitigation**: We focus on user-facing behavior (intentional choice)
-
-#### Conclusion Validity
-
-**Threat**: Small sample size limits statistical power  
-**Mitigation**: Report effect sizes, acknowledge limitations, plan larger studies
 
 ---
 
@@ -1051,24 +900,6 @@ This study provides strong empirical evidence that **activation function choice 
 
 6. **Activation function effects are architecture-dependent**: Transformers benefit significantly from smooth activations, while LSTMs' internal gating provides intrinsic stability.
 
-### 10.2 Practical Recommendations
-
-**For Practitioners:**
-- Use **GELU** as default for transformers (well-balanced, industry standard)
-- Use **SmeLU β=1.0** when reproducibility is critical (high-stakes applications, research)
-- Use **ReLU** for LSTMs (already reproducible, computational efficiency)
-- Always report activation function in reproducibility studies
-
-**For Researchers:**
-- Consider activation function as independent variable in ablations
-- Use smooth activations to reduce experimental noise
-- Report both accuracy and reproducibility metrics
-- Test with minimum 5 trials per condition (ideally 10+)
-
-**For Production Systems:**
-- Evaluate reproducibility requirements based on application criticality
-- Accept 3-7% training time cost for 10% reproducibility gain in critical systems
-- Monitor both accuracy and prediction variance in production
 
 ### 10.3 Contribution to the Field
 
@@ -1107,8 +938,6 @@ The architecture-dependent nature of activation function effects reveals that re
 ### 10.5 Final Thoughts
 
 Irreproducibility in deep learning is often treated as an unavoidable consequence of stochastic optimization. This work demonstrates that **simple architectural choices**, specifically activation function selection, can meaningfully improve reproducibility at minimal cost.
-
-The finding that LSTMs achieve near-perfect reproducibility regardless of activation suggests that **careful architecture design** can provide reproducibility benefits without relying on specific activation functions. This opens exciting research directions in designing inherently reproducible architectures.
 
 Ultimately, as AI systems are deployed in increasingly critical applications (healthcare, finance, autonomous systems), reproducibility must be elevated from a "nice-to-have" to a **design requirement**. Our work provides actionable insights for achieving this goal through informed activation function selection.
 
@@ -1149,7 +978,7 @@ Ultimately, as AI systems are deployed in increasingly critical applications (he
 - **Adaptive activations**: Learn activation parameters
 
 **Research Questions:**
-- Do gated activations (SwiGLU, GeGLU) improve reproducibility?
+- Do gated activations (GeGLU) improve reproducibility?
 - Can learnable activations adaptively optimize for reproducibility?
 
 ### 11.3 Broader Dataset Coverage
@@ -1166,35 +995,6 @@ Ultimately, as AI systems are deployed in increasingly critical applications (he
 - Word-level
 - Compare tokenization effects on reproducibility
 
-### 11.4 Enhanced Reproducibility Metrics
-
-**Distribution Similarity:**
-- **KL Divergence**: Measure distribution shift
-- **Jensen-Shannon Divergence**: Symmetric KL
-- **Wasserstein Distance**: Earth-mover distance
-
-**Semantic Similarity:**
-- **Edit Distance**: On generated text
-- **BLEU / ROUGE**: On completion tasks
-- **Embedding Similarity**: Contextual embeddings
-
-**Temporal Analysis:**
-- Reproducibility over training epochs
-- Early vs late training differences
-- Convergence trajectory similarity
-
-### 11.5 Statistical Rigor
-
-**Increased Trial Counts:**
-- 10 trials per condition (minimum for strong statistical power)
-- Bootstrap confidence intervals
-- Permutation tests for significance
-
-**Formal Hypothesis Testing:**
-- ANOVA across activations
-- Post-hoc pairwise comparisons (Tukey HSD)
-- Effect size calculations (Cohen's d)
-- Bayesian analysis for small effects
 
 ### 11.6 Theoretical Investigation
 
@@ -1225,17 +1025,6 @@ Ultimately, as AI systems are deployed in increasingly critical applications (he
 - Which architectures benefit most from smooth activations?
 - Can we design "reproducibility-aware" architectures?
 
-### 11.8 Reproducibility as an Objective
-
-**Multi-Objective Optimization:**
-- Joint optimization for accuracy + reproducibility
-- Pareto frontier analysis
-- Regularization terms for reproducibility
-
-**Reproducibility-Aware Training:**
-- Ensemble-based methods (average predictions across trials)
-- Consistency regularization (minimize trial disagreement)
-- Meta-learning for reproducible initializations
 
 ### 11.9 Production System Studies
 
@@ -1250,10 +1039,6 @@ Ultimately, as AI systems are deployed in increasingly critical applications (he
 - Maintenance burden (debugging reproducible vs non-reproducible models)
 
 ### 11.10 Cross-Domain Validation
-
-**Vision Models:**
-- Repeat experiments on ImageNet, CIFAR-100
-- Compare CV vs NLP reproducibility patterns
 
 **Multimodal Models:**
 - CLIP, Flamingo - how does modality affect reproducibility?
@@ -1279,8 +1064,6 @@ Ultimately, as AI systems are deployed in increasingly critical applications (he
 
 **Public Benchmarks:**
 - Create standardized reproducibility benchmark suite
-- Leaderboard for reproducibility-optimized models
-- Community challenge (NeurIPS, ICLR workshop)
 
 **Tool Development:**
 - Library for reproducibility metrics
@@ -1291,36 +1074,16 @@ Ultimately, as AI systems are deployed in increasingly critical applications (he
 
 ## 12. References
 
-### Activation Functions
-
-1. **Hendrycks, D., & Gimpel, K. (2016).** "Gaussian Error Linear Units (GELUs)." arXiv:1606.08415
-2. **Ramachandran, P., Zoph, B., & Le, Q. V. (2017).** "Searching for Activation Functions." arXiv:1710.05941
-3. **Misra, D. (2019).** "Mish: A Self Regularized Non-Monotonic Activation Function." arXiv:1908.08681
-4. **Elfwing, S., Uchibe, E., & Doya, K. (2018).** "Sigmoid-weighted linear units for neural network function approximation in reinforcement learning." Neural Networks, 107, 3-11.
-
 ### Reproducibility in Deep Learning
 
-1. **Nagarajan, V., & Kolter, J. Z. (2019).** "Gradient descent GAN optimization is locally stable." Advances in Neural Information Processing Systems, 32.
-2. **Bouthillier, X., Laurent, C., & Vincent, P. (2019).** "Unreproducible research is reproducible." International Conference on Machine Learning (ICML).
-3. **Gundersen, O. E., & Kjensmo, S. (2018).** "State of the art: Reproducibility in artificial intelligence." Thirty-Second AAAI Conference on Artificial Intelligence.
-4. **Pham, H., Dai, Z., Xie, Q., & Le, Q. V. (2021).** "Meta pseudo labels." Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR).
+1. **Shamir, G., & Lin, D. (2022).** "Real World Large Scale Recommendation Systems Reproducibility and Smooth Activations." Google Research Blog. arXiv:2202.06499.
+2. **Nagarajan, V., & Kolter, J. Z. (2019).** "Gradient descent GAN optimization is locally stable." Advances in Neural Information Processing Systems, 32.
+3. **Bouthillier, X., Laurent, C., & Vincent, P. (2019).** "Unreproducible research is reproducible." International Conference on Machine Learning (ICML).
 
 ### Language Models
 
-1. **Karpathy, A. (2015).** "The Unreasonable Effectiveness of Recurrent Neural Networks." Blog post.
 2. **Vaswani, A., Shazeer, N., Parmar, N., et al. (2017).** "Attention is all you need." Advances in Neural Information Processing Systems, 30.
-3. **Radford, A., Wu, J., Child, R., et al. (2019).** "Language models are unsupervised multitask learners." OpenAI blog.
-4. **Brown, T. B., Mann, B., Ryder, N., et al. (2020).** "Language models are few-shot learners." Advances in Neural Information Processing Systems, 33.
 
-### Parent Project
-
-1. **dl-reproducibility-activations**: Original vision model reproducibility study on CIFAR-10 with ResNet architectures.
-
-### Optimization and Training
-
-1. **Hochreiter, S., & Schmidhuber, J. (1997).** "Long short-term memory." Neural computation, 9(8), 1735-1780.
-2. **Kingma, D. P., & Ba, J. (2014).** "Adam: A method for stochastic optimization." arXiv:1412.6980
-3. **Loshchilov, I., & Hutter, F. (2017).** "Decoupled weight decay regularization." arXiv:1711.05101
 
 ---
 
@@ -1329,9 +1092,8 @@ Ultimately, as AI systems are deployed in increasingly critical applications (he
 ### Appendix A: Complete Experimental Results
 
 **Full results available in:**
-- `results/all_experiments_summary.json` (3,069 lines)
-- Per-activation JSON files: `results/{model}_{activation}_*.json`
-- Summary statistics: `results/summary.txt`
+- `https://github.com/pankajtakawale/llm-reproducibility-activations/results/all_experiments_summary.json` 
+- Per-activation JSON files: `https://github.com/pankajtakawale/llm-reproducibility-activations/results/{model}_{activation}_*.json`
 
 ### Appendix B: Visualization Gallery
 
@@ -1360,8 +1122,8 @@ plots/
 ### Appendix C: Reproducibility Statement
 
 **Code Repository:**
-- GitHub: dl-reproducibility-activations
-- Branch: master
+- GitHub: https://github.com/pankajtakawale/llm-reproducibility-activations
+- Branch: main
 - All experiments conducted: November-December 2025
 
 **Environment:**
@@ -1373,49 +1135,16 @@ plots/
 
 **Data Availability:**
 - Shakespeare corpus (public domain)
-- Train/val split files in `data/`
 
 **Computational Resources:**
-- Apple M4 Pro (CPU)
-- Total compute: ~1 CPU-hour for all experiments
+- Nvidia DGX Spark Server GB10
 
-**Seed Management:**
-- Base seed: 42
-- Trial seeds: 42 + trial_id
-- Seeds set for PyTorch, NumPy, Python random
 
-### Appendix D: File Manifest
-
-**Core Implementation (11 files):**
-- `config.py`, `config_cpu.py`: Configuration
-- `activations.py`: Activation implementations
-- `model*.py`: 6 model architectures
-- `train.py`: Training loop and metrics
-- `tokenizer.py`, `prepare_data.py`: Data utilities
-
-**Experiment Infrastructure (5 files):**
-- `run_all_experiments.py`: Main runner
-- `analyze_results.py`: Statistical analysis
-- `plot_utils.py`, `plot_advanced.py`: Visualization
-- `experiments.ipynb`: Interactive notebook
-
-**Documentation (10+ markdown files):**
-- `README.md`: Quick start
-- `REPORT.md`: Initial findings
-- `RESEARCH_REPORT.md`: Detailed analysis
-- `project_report.md`: This document
-- Guides: metrics, comparison, workflow, etc.
-
-**Results (90+ JSON files, 140+ PNG files):**
-- Complete training logs
-- Reproducibility metrics
-- Visualization plots
 
 ---
 
 ## Acknowledgments
 
-This work builds upon the foundational dl-reproducibility-activations project investigating activation functions in vision models. We extend sincere gratitude to the authors of that work for inspiring this investigation.
 
 **Software Libraries:**
 - PyTorch (Facebook AI Research)
@@ -1427,7 +1156,7 @@ This work builds upon the foundational dl-reproducibility-activations project in
 - Shakespeare corpus (public domain)
 
 **Computational Resources:**
-- Apple M4 Pro (development and experiments)
+- Nvidi DGX Spark GB10 & Apple M4 Pro (development and experiments)
 
 **Community:**
 - Open-source machine learning community
@@ -1438,7 +1167,7 @@ This work builds upon the foundational dl-reproducibility-activations project in
 **Contact Information:**
 
 For questions, collaboration, or access to additional results:
-- Repository: dl-reproducibility-activations
+- Repository: [dl-reproducibility-activations](https://github.com/pankajtakawale/llm-reproducibility-activations)
 - Issues: GitHub Issues page
 - Documentation: Full docs in repository
 
