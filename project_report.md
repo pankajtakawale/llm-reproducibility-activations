@@ -1322,7 +1322,7 @@ plots/
 **Contact Information:**
 
 For questions, collaboration, or access to additional results:
-- Repository: [dl-reproducibility-activations](https://github.com/pankajtakawale/llm-reproducibility-activations)
+- Repository: [llm-reproducibility-activations](https://github.com/pankajtakawale/llm-reproducibility-activations)
 - Issues: GitHub Issues page
 - Documentation: Full docs in repository
 
