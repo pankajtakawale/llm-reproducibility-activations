@@ -2,8 +2,8 @@
 
 **Date:** December 2025  
 **Project:** LLM Reproducibility with Activation Functions  
-**Repository:** dl-reproducibility-activations
-Authors: Pankaj Takawale (pvt2106) and Vinita Takawale (vut)
+**Repository:** https://github.com/pankajtakawale/llm-reproducibility-activations
+Authors: Pankaj Takawale (pvt2106) and Vinita Takawale (vt2365)
 
 ---
 
@@ -785,13 +785,14 @@ Both architecture AND activation function choice significantly impact reproducib
 | SmeLU β=1.0 | 1.094 | 2.5244 | 27.2% | 0.0018 |
 | Swish | 1.095 | 2.5117 | 26.6% | 0.0045 |
 
+
+![alt text](image-1.png)
+
 **Findings:**
 - SwiGLU achieved **44.8% better reproducibility** than Swish (0.593 vs 1.095)
 - Smooth gated activation (SwiGLU) shows best reproducibility
 - Effect size is significant (20.26% CV) - CharLM is **highly activation-sensitive**
 - Hypothesis H1 **strongly supported** - smooth gated activations show major advantage
-
-![alt text](image-1.png)
 
 
 ### 7.3 Key Finding: Accuracy vs Reproducibility Trade-off
@@ -814,7 +815,7 @@ Comparing best reproducibility (SwiGLU) vs standard baseline (ReLU):
 - **2× parameter cost** (significant but manageable for reproducibility-critical applications)
 - Hypothesis H4 **partially confirmed** - major reproducibility gains with moderate parameter overhead
 
-**Plot placeholder**: `[Screenshot: Accuracy vs reproducibility scatter plot - plots/accuracy_vs_reproducibility.png]`
+![alt text](image-5.png)
 
 #### MiniGPT: Highest Activation Sensitivity
 
