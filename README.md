@@ -11,7 +11,6 @@ This project investigates the relationship between activation functions and repr
 - ❌ **ReLU consistently worst** (except HybridLM)
 - 📊 **Architecture matters more than scale** (design > parameter count)
 
-See `FINAL_CONCLUSIONS.md` for complete analysis.
 
 ## Framework Design
 
@@ -229,7 +228,7 @@ for model in results.keys():
 
 ## Quick Start
 
-Training a single model takes **5-10 minutes** on CPU (Apple M4 Pro).
+Training a single model (2 layers only) takes **5-10 minutes** on CPU (Apple M4 Pro).
 
 ### Setup with Virtual Environment
 
@@ -437,67 +436,6 @@ python process_results.py --models charlm --activations smelu_05 smelu_1
 python process_results.py --no-plots
 ```
 
-### Incremental Workflow
-```
-# Day 1: Test two models
-python run_all_experiments.py --models charlm tinylstm
-python process_results.py
-
-# Day 2: Add another model (results accumulate!)
-python run_all_experiments.py --models hybridlm
-
-# Day 3: Process all accumulated results
-python process_results.py
-
-# Day 4: Complete the rest
-python run_all_experiments.py --models convlm minigpt nanotransformer
-python process_results.py  # Final comprehensive analysis
-```
-
-Workflow:
-
-```
-Quick test: python test_workflow.py (verify setup)
-Run experiments: python [run_all_experiments.py](http://_vscodecontentref_/15) --models charlm tinylstm
-## Models Tested
-
-| Model | Architecture | Parameters | Best Activation | CV% |
-|-------|--------------|------------|-----------------|-----|
-| **CharLM** | Small Transformer | 430K | SwiGLU | 20.26% |
-| **MiniGPT** | Large Transformer | 10.8M | Swish/GELU | 25.02% |
-| **NanoTransformer** | Tiny Transformer | 430K | SwiGLU | 9.92% |
-| **ConvLM** | CNN | 430K | SwiGLU | 15.05% |
-| **HybridLM** | CNN+Transformer | 430K | ReLU/Swish | 9.87% |
-| **TinyLSTM** | LSTM | 176K | **ALL TIED** | 0.00% ⭐ |
-
-**Key Insights:**
-- TinyLSTM is **activation-invariant** (any activation works!)
-- SwiGLU best for small transformers, poor for large (MiniGPT)
-- Architecture design matters more than parameter count
-### Run All Models
-## Activation Functions Tested
-
-| Activation | Performance Summary | Wins | Avg PD |
-|------------|---------------------|------|--------|
-| **SwiGLU** | Best for small transformers; fails at scale | 3/5 | 0.9706 |
-| **GELU** | Most consistent across all architectures | 0/5 | 0.9622 ⭐ |
-| **Swish** | Excellent overall, best for MiniGPT | 1/5 | 0.9628 |
-| **ReLU** | Worst in most cases; surprising HybridLM win | 1/5 | 1.1656 |
-| **SmeLU-1** | Consistently mediocre, no advantages | 0/5 | 1.1320 |
-
-**Recommendations:**
-- ✅ Use **SwiGLU** for small transformers (<1M params)
-- ✅ Use **GELU** when architecture is unknown (safest default)
-- ✅ Use **Swish** for large transformers (>10M params)
-- ❌ Avoid **ReLU** (except HybridLM)
-- ❌ Avoid **SmeLU-1** (no reproducibility benefit)
-- **Type**: Character-level GPT-style transformer
-- **Parameters**: ~10-15M
-- **Context Length**: 256 characters
-- **Layers**: 6
-- **Hidden Size**: 384
-- **Attention Heads**: 6
-
 ## Dataset
 
 **Shakespeare Corpus**
@@ -505,12 +443,6 @@ Run experiments: python [run_all_experiments.py](http://_vscodecontentref_/15) -
 - Characters: ~1M
 - Training time: 5-10 minutes per trial
 
-## Activation Functions Tested
-
-1. **SmeLU** (β=0.5, β=1.0) - Smooth ReLU
-2. **ReLU** - Baseline
-3. **GELU** - Standard in transformers
-4. **Swish** (SiLU) - Smooth activation
 ## Key Files
 
 **Core Scripts:**
@@ -542,75 +474,6 @@ Run experiments: python [run_all_experiments.py](http://_vscodecontentref_/15) -
 - `results/*.json` - Experiment outputs (30 files for complete suite)
 - `plots/*.png` - Visualization outputs
 
-## Programmatic Usage
-
-```python
-# Direct training with custom config
-from train import run_experiment
-from config import Config
-
-config = Config()
-config.activation = 'swiglu'
-config.max_iters = 500
-config.trials = 3
-
-results = run_experiment('charlm', 'swiglu', config)
-print(f"PD: {results['avg_relative_pd']:.4f}")
-print(f"Accuracy: {results['avg_val_accuracy']:.2f}%")
-```
-
-```python
-# Load and analyze existing results
-import json
-from pathlib import Path
-
-result_file = Path('results/charlm-swiglu-20251212_140000.json')
-data = json.loads(result_file.read_text())
-
-print(f"Model: {data['model_name']}")
-print(f"Activation: {data['activation']}")
-print(f"Avg PD: {data['avg_relative_pd']:.4f}")
-print(f"Trials: {len(data['trials'])}")
-```tokenizer.py` - Character-level tokenization
-- `activations.py` - Activation function implementations
-## Expected Runtime
-
-**CPU (500 iterations):**
-- CharLM: ~1 min per activation × 5 = ~5 min
-- ConvLM: ~7 min per activation × 5 = ~35 min
-- HybridLM: ~1 min per activation × 5 = ~5 min
-- NanoTransformer: ~1 min per activation × 5 = ~5 min
-- TinyLSTM: ~1 min per activation × 5 = ~5 min
-- **Total for 5 models: ~55 minutes**
-
-**GPU (MiniGPT, 5000 iterations):**
-- MiniGPT: ~50 min per activation × 5 = ~250 min (~4 hours)
-
-**Complete Suite (6 models × 5 activations × 3 trials):**
-- CPU portion: ~55 min
-- GPU portion (MiniGPT): ~4 hours
-- **Total: ~5 hours**
-
-## Available Models
-
-```python
-# All 6 models available
-MODEL_REGISTRY = {
-    'charlm': charlm_factory,          # Small transformer (430K)
-    'minigpt': minigpt_factory,        # Large transformer (10.8M)
-    'nanotransformer': nanotransformer_factory,  # Tiny transformer (430K)
-    'convlm': convlm_factory,          # CNN (430K)
-    'hybridlm': hybridlm_factory,      # CNN+Transformer hybrid (430K)
-    'tinylstm': tinylstm_factory,      # LSTM (176K) - activation-invariant!
-}
-config.activation = 'smelu_05'
-results = train_model(config)
-```
-
-## Expected Runtime
-
-- Single trial: 5-10 minutes
-- All activations (4) × 3 trials: ~2-3 hours total
 
 ## Models
 MODEL_REGISTRY = {
