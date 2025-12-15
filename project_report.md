@@ -3,6 +3,7 @@
 **Date:** December 2025  
 **Project:** LLM Reproducibility with Activation Functions  
 **Repository:** https://github.com/pankajtakawale/llm-reproducibility-activations
+
 Authors: Pankaj Takawale (pvt2106) and Vinita Takawale (vt2365)
 
 ---
