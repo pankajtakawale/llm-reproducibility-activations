@@ -2,7 +2,7 @@
 
 ## Overview
 
-This project investigates the relationship between activation functions and reproducibility across **6 neural network architectures**. We test whether different activation functions (ReLU, GELU, Swish, SwiGLU, SmeLU) lead to more reproducible model outputs using the Shamir et al. (2021) prediction difference metric.
+This project investigates the relationship between activation functions and reproducibility across **5 neural network architectures**. We test whether different activation functions (ReLU, GELU, Swish, SwiGLU, SmeLU) lead to more reproducible model outputs using the Shamir et al. (2021) prediction difference metric.
 
 **Key Findings:**
 - ✅ **SwiGLU best for small transformers** (CharLM: +45% improvement)
