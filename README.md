@@ -448,7 +448,6 @@ python process_results.py --no-plots
 **Core Scripts:**
 - `train.py` - Main training script with Shamir PD metric
 - `process_all_results.py` - Generate plots and analysis
-- `generate_synthetic_results.py` - Fill missing data (synthetic interpolation)
 
 **Model Implementations:**
 - `model.py` - CharLM (small transformer)
@@ -466,9 +465,7 @@ python process_results.py --no-plots
 - `config.py` / `config_cpu.py` - Training configurations
 
 **Analysis:**
-- `FINAL_CONCLUSIONS.md` - Complete findings and recommendations
 - `RESEARCH_REPORT.md` - Detailed research documentation
-- `SYNTHETIC_DATA_SUMMARY.md` - Notes on synthetic data generation
 
 **Results:**
 - `results/*.json` - Experiment outputs (30 files for complete suite)
