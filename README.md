@@ -22,10 +22,10 @@ Our framework is built on three core principles: **modularity**, **reproducibili
 ```
 ┌─────────────────────────────────────────────────────────────┐
 │                    Training Pipeline (train.py)             │
-│  ┌───────────┐  ┌──────────┐  ┌───────────┐  ┌──────────┐ │
-│  │ Load Data │→ │ Build    │→ │ Train     │→ │ Evaluate │ │
-│  │ (tokenize)│  │ Model    │  │ 3 Trials  │  │ Shamir PD│ │
-│  └───────────┘  └──────────┘  └───────────┘  └──────────┘ │
+│  ┌───────────┐  ┌──────────┐  ┌───────────┐  ┌──────────┐   │
+│  │ Load Data │→ │ Build    │→ │ Train     │→ │ Evaluate │   │
+│  │ (tokenize)│  │ Model    │  │ N Trials  │  │ Rel PD   │   │
+│  └───────────┘  └──────────┘  └───────────┘  └──────────┘   │
 └─────────────────────────────────────────────────────────────┘
          ↓                ↓                          ↓
 ┌────────────────┐  ┌─────────────────┐   ┌──────────────────┐
@@ -36,7 +36,7 @@ Our framework is built on three core principles: **modularity**, **reproducibili
 │ • Nano         │  │ • Swish         │   │ • Timestamps     │
 │ • ConvLM       │  │ • SwiGLU        │   └──────────────────┘
 │ • HybridLM     │  │ • SmeLU         │            ↓
-│ • TinyLSTM     │  └─────────────────┘   ┌──────────────────┐
+│ • TinyLSTM     │  └─────────────────┘    ┌──────────────────┐
 └────────────────┘                         │ Analysis         │
                                            │ (process_*.py)   │
                                            │ • Cross-model    │
