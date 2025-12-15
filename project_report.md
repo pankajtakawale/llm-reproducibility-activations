@@ -353,37 +353,34 @@ device = 'cuda'        # GPU execution
 
 #### Architecture-Specific Details
 
-**CharLM** (~400K parameters)
-- 2 transformer blocks with self-attention
+**CharLM** (~10.5 Million parameters)
 - Layer normalization
 - Position embeddings
 - 128 embedding dimension, 4 attention heads
 
-**TinyLSTM** (~400K parameters)
+**TinyLSTM** (~10.5 Million parameters)
 - 2-layer bidirectional LSTM
 - Dropout between layers
 - Final linear projection
 
-**MiniGPT** (~400K parameters)
+**MiniGPT** (~10.5 Million parameters)
 - GPT-style architecture
 - Causal self-attention
 - Feed-forward network with 4× expansion
-- 2 layers, 128 hidden dimension
 
-**ConvLM** (~400K parameters)
+**ConvLM** (~10.5 Million parameters)
 - 1D convolution layers (kernel size 3)
 - Multi-head attention on conv features
 - Residual connections
 
-**HybridLM** (~400K parameters)
+**HybridLM** (~10.5 Million parameters)
 - LSTM for sequential processing
 - Self-attention over LSTM outputs
 - Combined contextualization
 
-**NanoTransformer** (~400K parameters)
+**NanoTransformer** (~10.5 Million parameters)
 - Simplified transformer
 - Reduced attention complexity
-- 2 layers, 128 embedding dimension
 - Streamlined feed-forward
 
 ### 5.3 Training Procedure
